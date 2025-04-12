@@ -5,6 +5,7 @@ import time
 import pygetwindow as gw
 
 from Util.get_path import get_picture_path
+from Util.util import wait_and_click_image
 
 
 class GameLauncher:
@@ -44,7 +45,7 @@ class GameLauncher:
 
         # 开始检测图片并点击
         try:
-            self.wait_and_click(window_title)
+            wait_and_click_image(self.image_path, window_title)
         except KeyboardInterrupt:
             print("程序被用户中断。")
 
