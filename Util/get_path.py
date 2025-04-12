@@ -48,3 +48,22 @@ def get_picture_path(picture):
     return resource_path
 
 
+def get_config_path():
+    project_root = find_project_root()
+    if project_root:
+        print()
+    else:
+        print("未找到包含 resource 的项目根目录")
+    resource_path = os.path.join(project_root, 'config.json')
+    return resource_path
+
+def get_wechatOcr_path():
+    project_root = find_project_root()
+    if project_root:
+        print()
+    else:
+        print("未找到包含 resource 的项目根目录")
+    wechatOcr = os.path.join(project_root, 'resource', 'wechatOcr')
+    extracted = os.path.join(project_root, 'resource', 'wechatOcr', 'extracted')
+
+    return wechatOcr, extracted

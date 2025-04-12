@@ -1,18 +1,9 @@
 import os
 import pyautogui
-import time
 
 from Util.get_path import get_image_path, get_picture_path
-from Util.util import activate_window_by_title, click_coordinate, press_keyboard
+from Util.util import click_coordinate, press_keyboard
 from 微信ocr import wechat_ocr, OutputType
-
-# 1. 点击一次L
-# 2. 点击（540，650）
-# 3. 截图（310，840）到（1570，1000），保存到"./resource/image/mission.png"
-# 4. 调用方法 res = wechat_ocr("./resource/image/mission.png", OutputType.Concise)，如果ocr结果（res）包含"活跃能量"，往一个任务队列加入"活跃能量"——对于"素材激化幻境"、"小游戏"、"拍照"做一样的处理
-
-# 接下来，把2的坐标依次换成（760，300）（1140，455）（1500，700）（1700，500），分别执行1到4步骤。
-
 
 
 

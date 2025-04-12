@@ -6,6 +6,9 @@ import pyautogui
 import time
 import pygetwindow as gw
 
+from Util.get_path import get_picture_path
+
+
 def find_image_on_screen(image_path):
     # 确保路径是 Unicode 字符串
     image_path = os.path.normpath(image_path)
@@ -31,12 +34,16 @@ def activate_window_by_title(window_title="无限暖暖"):
         print(f"激活窗口时发生错误: {e}")
 
 
-def wait_image(image_path, window_title="无限暖暖", wait_interval=1):
+
+
+def wait_image(image_path, window_title="无限暖暖", wait_interval=0.5):
     """
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
     :param window_title: 要激活的窗口标题
     """
+    image_path = get_picture_path(image_path)
     print(f"正在寻找图片: {image_path}")
+    time.sleep(wait_interval)
     while True:
         try:
             # 激活指定窗口
@@ -60,7 +67,9 @@ def wait_and_click_image(image_path, window_title="无限暖暖", wait_interval=
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
     :param window_title: 要激活的窗口标题
     """
+    image_path = get_picture_path(image_path)
     print(f"正在寻找图片: {image_path}")
+    time.sleep(wait_interval)
     while True:
         try:
             # 激活指定窗口
@@ -72,8 +81,9 @@ def wait_and_click_image(image_path, window_title="无限暖暖", wait_interval=
             # 计算图片中心坐标
             x, y = pyautogui.center(location)
 
-            # 移动鼠标并点击
-            pyautogui.click(x, y)
+            pyautogui.mouseDown(x, y)  # 按下鼠标
+            time.sleep(0.1)
+            pyautogui.mouseUp(x, y)  # 松开鼠标
             print("成功点击图片！")
             break  # 点击后退出循环
         except pyautogui.ImageNotFoundException:

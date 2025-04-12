@@ -6,6 +6,8 @@ import time
 from typing import *
 from wechat_ocr.ocr_manager import OcrManager, OCR_MAX_TASK_ID
 
+from Util.get_path import get_wechatOcr_path
+
 WECHAT_OCR_DIR = None
 WECHAT_DIR = None
 
@@ -107,8 +109,10 @@ def wechat_ocr(image_path, output_type=OutputType.Detailed) -> dict:
     global ocr_res
     ocr_res = None
 
+    wechatOcr, extracted = get_wechatOcr_path()
+
     if not ocr_manager:
-        start_wechat_ocr("./resource/wechatOcr/extracted","./resource/wechatOcr")
+        start_wechat_ocr(extracted, wechatOcr)
 
     # 开始识别图片
     ocr_manager.DoOCRTask(image_path)
@@ -122,8 +126,8 @@ def wechat_ocr(image_path, output_type=OutputType.Detailed) -> dict:
 
         return ocr_res
 
-
-image_path = "./resource/image/mission.png"
-res = wechat_ocr(image_path, OutputType.Concise)
-print(res)
+if __name__ == "__main__":
+    image_path = "resource/image/mission.png"
+    res = wechat_ocr(image_path, OutputType.Concise)
+    print(res)
 

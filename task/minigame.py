@@ -3,7 +3,7 @@ import time
 import os
 
 from Util.get_path import get_picture_path
-from Util.util import press_keyboard, click_coordinate, activate_window_by_title, wait_and_click_image, wait_image
+from Util.util import press_keyboard, click_coordinate, activate_window_by_title, wait_image
 
 
 class Minigame:
@@ -25,14 +25,14 @@ class Minigame:
         执行点击操作以找到小游戏的位置。
         """
         press_keyboard('m')  # 点击键盘上的 m 键
-        wait_image(get_picture_path("return"))
         for x, y in self.coordinates:
             try:
+                wait_image("return")
                 click_coordinate(x, y)  # 点击指定坐标
             except Exception as e:
                 print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
                 continue  # 发生错误继续处理下一个坐标
-        wait_image(get_picture_path("daMiao"))
+        wait_image("daMiao")
         self.walk_to_minigame()
 
     def walk_to_minigame(self):
@@ -42,9 +42,9 @@ class Minigame:
         activate_window_by_title()
         pyautogui.keyDown('a')
         time.sleep(2.3)
-        press_keyboard('space', duration=0.1)
+        press_keyboard('space')
         time.sleep(0.1)
-        press_keyboard('space', duration=0.1)
+        press_keyboard('space')
         time.sleep(11)
         pyautogui.keyUp('a')
         time.sleep(1)
