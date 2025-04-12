@@ -9,11 +9,6 @@ import pygetwindow as gw
 from Util.get_path import get_picture_path
 
 
-def find_image_on_screen(image_path):
-    # 确保路径是 Unicode 字符串
-    image_path = os.path.normpath(image_path)
-    location = pyautogui.locateOnScreen(image_path, confidence=0.8)
-    return location
 def activate_window_by_title(window_title="无限暖暖"):
     """
     根据窗口标题激活窗口。
@@ -36,18 +31,20 @@ def activate_window_by_title(window_title="无限暖暖"):
 
 
 
-def wait_image(image_path, window_title="无限暖暖", wait_interval=0.5):
+def wait_image(image_path, wait_interval=0.5, max_attempts=100):
     """
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
     :param window_title: 要激活的窗口标题
+    :param max_attempts: 最大尝试次数
     """
     image_path = get_picture_path(image_path)
     print(f"正在寻找图片: {image_path}")
     time.sleep(wait_interval)
-    while True:
+    attempts = 0
+    while attempts < max_attempts:
         try:
             # 激活指定窗口
-            activate_window_by_title(window_title)
+            activate_window_by_title()
 
             # 尝试在屏幕上查找图片
             location = pyautogui.locateOnScreen(image_path, confidence=0.8)
@@ -61,19 +58,24 @@ def wait_image(image_path, window_title="无限暖暖", wait_interval=0.5):
         except Exception as e:
             print(f"发生未知错误: {e}")
             break
+        attempts += 1
+    else:
+        print(f"达到最大尝试次数 {max_attempts}，仍未找到图片: {image_path}")
 
-def wait_and_click_image(image_path, window_title="无限暖暖", wait_interval=1):
+def wait_and_click_image(image_path, wait_interval=1, max_attempts=15):
     """
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
     :param window_title: 要激活的窗口标题
+    :param max_attempts: 最大尝试次数
     """
     image_path = get_picture_path(image_path)
     print(f"正在寻找图片: {image_path}")
     time.sleep(wait_interval)
-    while True:
+    attempts = 0
+    while attempts < max_attempts:
         try:
             # 激活指定窗口
-            activate_window_by_title(window_title)
+            activate_window_by_title()
 
             # 尝试在屏幕上查找图片
             location = pyautogui.locateOnScreen(image_path, confidence=0.8)
@@ -93,6 +95,9 @@ def wait_and_click_image(image_path, window_title="无限暖暖", wait_interval=
         except Exception as e:
             print(f"发生未知错误: {e}")
             break
+        attempts += 1
+    else:
+        print(f"达到最大尝试次数 {max_attempts}，仍未找到图片: {image_path}")
 
 def click_coordinate(x, y):
     """

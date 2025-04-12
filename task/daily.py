@@ -1,4 +1,6 @@
 import os
+import time
+
 import pyautogui
 
 from Util.get_path import get_image_path, get_picture_path
@@ -30,13 +32,14 @@ class DailyMissionRecognizer:
         """
         遍历坐标列表，依次点击每个坐标并执行任务检测。
         """
+        time.sleep(1)
         for x, y in self.coordinates:
             try:
-                click_coordinate(x, y)  # 点击指定坐标
-                self.capture_and_analyze()  # 截图并分析OCR结果
+                click_coordinate(x, y)
+                self.capture_and_analyze()
             except Exception as e:
                 print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
-                continue  # 发生错误继续处理下一个坐标
+                continue
 
 
 
@@ -48,16 +51,16 @@ class DailyMissionRecognizer:
             self.screenshot_path,
             region=(310, 840, 1570 - 310, 1000 - 840)  # 计算区域宽高
         )
-        res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)  # 调用OCR获取文本
+        res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
         print(res_text)
-        self.analyze_ocr_result(res_text)  # 分析OCR结果
+        self.analyze_ocr_result(res_text)
 
     def analyze_ocr_result(self, res_text):
         """
         分析OCR结果，提取任务类型并加入任务队列。
         :param res_text: OCR返回的文本列表
         """
-        keywords = ["活跃能量", "素材激化幻境", "小游戏", "照片", "祝福闪光", "挖掘", "昆虫"]
+        keywords = ["活跃能量", "素材激化幻境", "小游戏", "照片", "祝福闪光", "挖掘", "昆虫", "植物", "魔气怪", "魔物试炼幻境", "服装"]
         for text_line in res_text:
             for keyword in keywords:
                 if keyword in text_line:
@@ -69,16 +72,17 @@ class DailyMissionRecognizer:
                             self.task_queue.add("祝福闪光+幻境")
                     else:
                         self.task_queue.add(keyword)
-                    break  # 如果找到一个关键词，跳出内层循环（避免重复添加）
+                    break
 
     def run(self):
         """
         执行任务检测流程。
         """
         press_keyboard('l')
-        self.process_coordinates()  # 处理坐标列表
+        self.process_coordinates()
         press_keyboard('l')
-        print("检测到的任务类型:", self.task_queue)  # 输出最终任务队列
+        print("检测到的任务类型:", self.task_queue)
+        return self.task_queue
 
 
 # 实例化并运行任务检测

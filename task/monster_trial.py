@@ -5,7 +5,7 @@ from Util.get_path import get_picture_path, get_config_path
 from Util.util import activate_window_by_title, click_coordinate, wait_and_click_image
 from 微信ocr import wechat_ocr
 
-
+# 魔物试炼幻境
 class MonsterTrialAutomation:
     def __init__(self):
         self.config_path = get_config_path()

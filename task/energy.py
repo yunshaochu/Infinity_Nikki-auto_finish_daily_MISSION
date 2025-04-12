@@ -4,6 +4,7 @@ import pyautogui
 
 from Util.get_path import get_picture_path
 from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image
+from task.monster_trial import MonsterTrialAutomation
 
 coordinates = [
             (1740, 110),
@@ -32,12 +33,15 @@ def locate_minigame():
     pyautogui.keyUp('a')
     pyautogui.keyUp('w')
 
+    # 进入副本
     press_keyboard('f')
     wait_image("return")
 
 # 魔物试炼幻境（280，500）
 def enter_monster_trial():
     click_coordinate(280, 500)
+    automation = MonsterTrialAutomation()
+    automation.run()
 
 # 祝福闪光幻境（500，800）
 def enter_blessing_glory():
@@ -55,7 +59,7 @@ def enter_material_activation(choice_material="bubble", choice_consumable="flowe
     wait_and_click_image(choice_material)
     wait_and_click_image(choice_consumable)
     wait_and_click_image("max")
-    wait_and_click_image("yes")
+    wait_and_click_image("yes3")
 
 
 
@@ -63,6 +67,7 @@ def enter_material_activation(choice_material="bubble", choice_consumable="flowe
 def enter_weekly_dungeon():
     click_coordinate(1600, 500)
     wait_and_click_image("quickChallenge")
+    wait_and_click_image("useEnergy")
 
 
 

@@ -24,14 +24,20 @@ class Minigame:
         """
         执行点击操作以找到小游戏的位置。
         """
-        press_keyboard('m')  # 点击键盘上的 m 键
+        press_keyboard('m')
+        wait_image("return")
         for x, y in self.coordinates:
-            try:
-                wait_image("return")
-                click_coordinate(x, y)  # 点击指定坐标
-            except Exception as e:
-                print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
-                continue  # 发生错误继续处理下一个坐标
+
+            click_coordinate(x, y)
+            if x==1740 and y==110:
+                try:
+                    location = pyautogui.locateOnScreen(get_picture_path('navigate'), confidence=0.8)
+                except Exception as e:
+                    print(f"没找到图像daMiao")
+                    location = None
+                if location is None:
+                    click_coordinate(x, y)
+            time.sleep(0.5)
         wait_image("daMiao")
         self.walk_to_minigame()
 
@@ -59,7 +65,7 @@ class Minigame:
         """
         activate_window_by_title()
         press_keyboard('f')  # 按下 f 键
-        time.sleep(1)  # 等待一小段时间
+        time.sleep(1)  
 
         # 获取图片路径
         dialog_path = get_picture_path('dialog')
@@ -75,9 +81,9 @@ class Minigame:
                 location = None
 
             if location is None:
-                break  # 图片消失，退出循环
-            click_coordinate(1420, 700)  # 点击坐标
-            time.sleep(0.5)  # 等待一小段时间
+                break 
+            click_coordinate(1420, 700)  
+            time.sleep(0.5)  
 
         # 不停按下 f，直到图片 dialog 出现
         while True:
@@ -86,10 +92,27 @@ class Minigame:
             except Exception as e:
                 location = None
 
-            if location is not None:
-                break  # 图片出现，退出循环
-            press_keyboard('f')  # 按下 f 键
-            time.sleep(0.5)  # 等待一小段时间
+            try:
+                location_retry = pyautogui.locateOnScreen(get_picture_path('retry'), confidence=0.8)
+            except Exception as e:
+                location_retry = None
+
+            if location_retry:
+                x, y = pyautogui.center(location_retry)
+                pyautogui.mouseDown(x, y)  # 按下鼠标
+                time.sleep(0.1)
+                pyautogui.mouseUp(x, y)  # 松开鼠标
+                time.sleep(5)
+                pyautogui.mouseDown(x, y)  # 按下鼠标
+                time.sleep(0.1)
+                pyautogui.mouseUp(x, y)  # 松开鼠标
+                print("重试小游戏")
+
+            if location:
+                break
+
+            press_keyboard('f') # 推球
+            time.sleep(0.1)  
 
         daMiao = get_picture_path('daMiao')
         while True:
@@ -99,9 +122,9 @@ class Minigame:
                 location = None
 
             if location:
-                break  # 图片消失，退出循环
-            click_coordinate(1446, 760)  # 点击坐标
-            time.sleep(0.5)  # 等待一小段时间
+                break 
+            click_coordinate(1446, 760)  
+            time.sleep(0.5)  
 
 
 # 实例化并运行小游戏定位

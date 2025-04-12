@@ -15,8 +15,16 @@ class Fight:
 
         for x, y in coordinates:
             try:
-                wait_image("return")  # 每次操作前确保在正确界面
                 click_coordinate(x, y)
+                if x == 1740 and y == 110:
+                    try:
+                        location = pyautogui.locateOnScreen(get_picture_path('navigate'), confidence=0.8)
+                    except Exception as e:
+                        print(f"没找到图像daMiao")
+                        location = None
+                    if location is None:
+                        click_coordinate(x, y)
+                time.sleep(0.5)
             except Exception as e:
                 print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
                 continue
