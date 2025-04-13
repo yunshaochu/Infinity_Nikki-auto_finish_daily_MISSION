@@ -1,87 +1,136 @@
 import time
 import pyautogui
-from Util.get_path import get_picture_path
-from Util.util import press_keyboard, wait_image, click_coordinate, activate_window_by_title
+from Util.util import press_keyboard, activate_window_by_title, map_jump, wait_image, wait_and_click_image
 
 
 class Fight:
     def __init__(self):
         pass
 
-    def _navigate_coordinates(self, coordinates):
-        """内部方法：执行坐标导航核心流程"""
-        press_keyboard('m')
-        wait_image("return")
 
-        for x, y in coordinates:
-            try:
-                click_coordinate(x, y)
-                if x == 1740 and y == 110:
-                    try:
-                        location = pyautogui.locateOnScreen(get_picture_path('navigate'), confidence=0.8)
-                    except Exception as e:
-                        print(f"没找到图像daMiao")
-                        location = None
-                    if location is None:
-                        click_coordinate(x, y)
-                time.sleep(0.5)
-            except Exception as e:
-                print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
-                continue
-
-        wait_image("daMiao")
-
-    def _execute_walk_actions(self, duration):
-        """内部方法：执行行走相关操作"""
+    def _walk_to_fight(self, movement_sequence):
+        """根据动作序列移动角色"""
         activate_window_by_title()
 
-        # 横向移动
-        pyautogui.keyDown('d')
-        time.sleep(duration)
-        pyautogui.keyUp('d')
+        for action in movement_sequence:
+            act = action.get('type')
+            if act == 'key_down':
+                pyautogui.keyDown(action['key'])
+            elif act == 'key_up':
+                pyautogui.keyUp(action['key'])
+            elif act == 'press':
+                press_keyboard(action['key'])
+            elif act == 'wait':
+                time.sleep(action['duration'])
+            elif act == 'attack':
+                self._attack_sequence(action.get('times', 16))
+                result = wait_image('daMiao', max_attempts=3)
+                # 如果没出现"daMiao"说明死了，点一下复活
+                if not result:
+                    wait_and_click_image('revive')
+                    wait_image('daMiao')
 
-        # 释放大招
+            elif act == 'ultimate':
+                self._release_ultimate()
+
+    def _release_ultimate(self):
         pyautogui.keyDown('q')
         pyautogui.mouseDown(button='left')
         time.sleep(0.1)
         pyautogui.mouseUp(button='left')
         pyautogui.keyUp('q')
 
-        # 连击操作
-        for _ in range(16):
+    def _attack_sequence(self, times):
+        for _ in range(times):
             pyautogui.mouseDown()
             time.sleep(0.1)
             pyautogui.mouseUp()
             time.sleep(1)
 
-    def locate_fight_v1(self):
-        """版本1的定位战斗流程"""
-        coordinates = [
-            (1740, 110),
-            (1560, 950),
-            (555, 500),
-            (1600, 1000)
-        ]
-        self._navigate_coordinates(coordinates)
-        self._execute_walk_actions(6)
-
-    def locate_fight_v2(self):
-        """版本2的定位战斗流程"""
-        coordinates = [
-            (1740, 110),
-            (1560, 950),
-            (580, 730),
-            (1600, 1000)
-        ]
-        self._navigate_coordinates(coordinates)
-        self._execute_walk_actions(17)
+    def fight_at_location(self, coordinates, movement_sequence):
+        map_jump(coordinates)
+        self._walk_to_fight(movement_sequence)
 
     def run(self):
-        self.locate_fight_v1()
-        self.locate_fight_v2()
+        # 示例点位1
+        self.fight_at_location(
+            coordinates=[
+                (1740, 110),
+                (1560, 950),
+                (555, 500),
+                (1600, 1000)
+            ],
+            movement_sequence=[
+                {'type': 'key_down', 'key': 'd'},
+                {'type': 'wait', 'duration': 6},
+                {'type': 'key_up', 'key': 'd'},
+                {'type': 'ultimate'},
+                {'type': 'attack', 'times': 16}
+            ]
+        )
+
+        # 示例点位2
+        self.fight_at_location(
+            coordinates=[
+                (1740, 110),
+                (1560, 950),
+                (580, 730),
+                (1600, 1000)
+            ],
+            movement_sequence=[
+                {'type': 'key_down', 'key': 'd'},
+                {'type': 'wait', 'duration': 17},
+                {'type': 'key_up', 'key': 'd'},
+                {'type': 'ultimate'},
+                {'type': 'attack', 'times': 16}
+            ]
+        )
+
+        # 绿野微风
+        self.fight_at_location(
+            coordinates=[
+                (1740, 110),
+                (1500, 500),
+                (1515, 460),
+                (1600, 1000)
+            ],
+            movement_sequence=[
+                {'type': 'key_down', 'key': 's'},
+                {'type': 'key_down', 'key': 'd'},
+                {'type': 'wait', 'duration': 5},
+                {'type': 'press', 'key': 'space'},
+                {'type': 'wait', 'duration': 20},
+                {'type': 'key_up', 'key': 's'},
+                {'type': 'key_up', 'key': 'd'},
+                {'type': 'key_down', 'key': 'w'},
+                {'type': 'wait', 'duration': 4},
+                {'type': 'key_up', 'key': 'w'},
+                {'type': 'press', 'key': 's'},
+                {'type': 'ultimate'},
+                {'type': 'attack', 'times': 16}
+            ]
+        )
+
+        # 小石头树田
+        self.fight_at_location(
+            coordinates=[
+                (1740, 110),
+                (1600, 600),
+                (560, 200),
+                (1600, 1000)
+            ],
+            movement_sequence=[
+                {'type': 'key_down', 'key': 'a'},
+                {'type': 'key_down', 'key': 's'},
+                {'type': 'wait', 'duration': 4},
+                {'type': 'key_up', 'key': 'a'},
+                {'type': 'key_up', 'key': 's'},
+                {'type': 'ultimate'},
+                {'type': 'attack', 'times': 16}
+            ]
+        )
 
 
-# 使用示例
 if __name__ == "__main__":
-    navigator = Fight()
-    navigator.run()
+    fight = Fight()
+    fight.run()

@@ -1,12 +1,48 @@
-import subprocess
-import os
-from pathlib import Path
-
 import pyautogui
 import time
 import pygetwindow as gw
 
 from Util.get_path import get_picture_path
+
+
+def map_jump(coordinates, max_retries=5):
+    """
+    地图传送
+    :param coordinates: 坐标列表
+    :param max_retries: 最大重试次数
+    """
+    if max_retries <= 0:
+        print("'地图传送'达到最大重试次数，停止重试。")
+        return
+
+    to_main_menu()  # 确保在主菜单界面
+    press_keyboard('m')
+    wait_image("return")
+
+    # 扩大四次地图，缩小一次地图
+    click_coordinate(376, 1037)
+    click_coordinate(376, 1037)
+    click_coordinate(376, 1037)
+    click_coordinate(376, 1037)
+    click_coordinate(60, 1040)
+
+    for index, (x, y) in enumerate(coordinates):
+        print("index:" + str(index))
+        click_coordinate(x, y)
+        if index == 0:
+            result = wait_image('wish_wilderness', max_attempts=3)
+            if not result:
+                print("没找到图像'心愿原野'")
+                click_coordinate(x, y)
+        if index == len(coordinates) - 2:
+            result = wait_image('teleport', max_attempts=5)
+            if not result:
+                print("没找到图像'传送'，重新打开地图")
+                map_jump(coordinates, max_retries - 1)  # 减少重试次数
+                break
+        time.sleep(0.5)
+    wait_image("daMiao")
+
 
 
 def activate_window_by_title(window_title="无限暖暖"):
@@ -41,6 +77,7 @@ def wait_image(image_path, wait_interval=0.5, max_attempts=100):
     print(f"正在寻找图片: {image_path}")
     time.sleep(wait_interval)
     attempts = 0
+    result = True
     while attempts < max_attempts:
         try:
             # 激活指定窗口
@@ -57,10 +94,13 @@ def wait_image(image_path, wait_interval=0.5, max_attempts=100):
             time.sleep(wait_interval)
         except Exception as e:
             print(f"发生未知错误: {e}")
+            result = False
             break
         attempts += 1
     else:
         print(f"达到最大尝试次数 {max_attempts}，仍未找到图片: {image_path}")
+        result = False
+    return result
 
 def wait_and_click_image(image_path, wait_interval=1, max_attempts=15):
     """
@@ -123,3 +163,21 @@ def press_keyboard(key, duration=0.1):
     if duration > 0:
         time.sleep(duration)  # 使用time模块的sleep方法
     pyautogui.keyUp(key)
+
+
+def to_main_menu():
+    """
+    确保当前界面在主菜单。
+    通过不断查找并点击“return”按钮，直到找到“daMiao”图像为止。
+    """
+    while True:
+        # 尝试查找“daMiao”图像，最大尝试次数为2次
+        result = wait_image("daMiao", max_attempts=2)
+        if result:
+            # 如果找到“daMiao”图像，说明已经在主菜单，退出循环
+            print("已找到 'daMiao' 图像，确认在主菜单界面。")
+            break
+        else:
+            # 如果没有找到“daMiao”图像，点击“return”按钮尝试返回主菜单
+            print("未找到 'daMiao' 图像，点击 'return' 按钮返回主菜单。")
+            wait_and_click_image("return")

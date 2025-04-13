@@ -2,8 +2,7 @@ import time
 
 import pyautogui
 
-from Util.get_path import get_picture_path
-from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image
+from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, map_jump
 from task.monster_trial import MonsterTrialAutomation
 
 coordinates = [
@@ -16,15 +15,7 @@ coordinates = [
 
 
 def locate_minigame():
-    press_keyboard('m')  # 点击键盘上的 m 键
-    for x, y in coordinates:
-        try:
-            wait_image("return")
-            click_coordinate(x, y)  # 点击指定坐标
-        except Exception as e:
-            print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
-            continue  # 发生错误继续处理下一个坐标
-    wait_image("daMiao")
+    map_jump(coordinates)
 
     # 走到传送锚点面前
     pyautogui.keyDown('a')

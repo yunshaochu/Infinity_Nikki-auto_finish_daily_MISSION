@@ -3,7 +3,7 @@ import time
 import os
 
 from Util.get_path import get_picture_path
-from Util.util import press_keyboard, click_coordinate, activate_window_by_title, wait_image
+from Util.util import press_keyboard, click_coordinate, activate_window_by_title, wait_image, map_jump
 
 
 class Minigame:
@@ -20,26 +20,7 @@ class Minigame:
             (1600, 1000)
         ]
 
-    def locate_minigame(self):
-        """
-        执行点击操作以找到小游戏的位置。
-        """
-        press_keyboard('m')
-        wait_image("return")
-        for x, y in self.coordinates:
 
-            click_coordinate(x, y)
-            if x==1740 and y==110:
-                try:
-                    location = pyautogui.locateOnScreen(get_picture_path('navigate'), confidence=0.8)
-                except Exception as e:
-                    print(f"没找到图像daMiao")
-                    location = None
-                if location is None:
-                    click_coordinate(x, y)
-            time.sleep(0.5)
-        wait_image("daMiao")
-        self.walk_to_minigame()
 
     def walk_to_minigame(self):
         """
@@ -130,6 +111,8 @@ class Minigame:
 # 实例化并运行小游戏定位
 if __name__ == "__main__":
     locator = Minigame()
-    locator.locate_minigame()
+    map_jump(locator.coordinates)
+    locator.walk_to_minigame()
+
     # locator.walk_to_minigame()
     # locator.start_minigame()
