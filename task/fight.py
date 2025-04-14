@@ -1,6 +1,6 @@
 import time
 import pyautogui
-from Util.util import press_keyboard, activate_window_by_title, map_jump, wait_image, wait_and_click_image
+from Util.util import press_keyboard, activate_window_by_title, map_jump, wait_image, wait_and_click_image, is_main_menu
 
 
 class Fight:
@@ -24,7 +24,7 @@ class Fight:
                 time.sleep(action['duration'])
             elif act == 'attack':
                 self._attack_sequence(action.get('times', 16))
-                result = wait_image('daMiao', max_attempts=3)
+                result = is_main_menu()
                 # 如果没出现"daMiao"说明死了，点一下复活
                 if not result:
                     wait_and_click_image('revive')
@@ -34,11 +34,26 @@ class Fight:
                 self._release_ultimate()
 
     def _release_ultimate(self):
+
+        # 蛇形走位：注意，必须同时按住shift和up（或者任意方向键）才能冲刺
+        pyautogui.keyDown('shift')
+        pyautogui.keyDown('up')
+        pyautogui.keyUp('up')
+        pyautogui.keyUp('shift')
+
         pyautogui.keyDown('q')
         pyautogui.mouseDown(button='left')
         time.sleep(0.1)
         pyautogui.mouseUp(button='left')
         pyautogui.keyUp('q')
+
+        # 开大后一瞬间是没有daMiao的，如何有说明开大失败了，再开一次
+        if not wait_image('daMiao', max_attempts=1):
+            pyautogui.keyDown('q')
+            pyautogui.mouseDown(button='left')
+            time.sleep(0.1)
+            pyautogui.mouseUp(button='left')
+            pyautogui.keyUp('q')
 
     def _attack_sequence(self, times):
         for _ in range(times):
@@ -105,9 +120,13 @@ class Fight:
                 {'type': 'key_down', 'key': 'w'},
                 {'type': 'wait', 'duration': 4},
                 {'type': 'key_up', 'key': 'w'},
-                {'type': 'press', 'key': 's'},
+                {'type': 'key_down', 'key': 's'},
+                {'type': 'key_down', 'key': 'd'},
+                {'type': 'wait', 'duration': 4},
+                {'type': 'key_up', 'key': 's'},
+                {'type': 'key_up', 'key': 'd'},
                 {'type': 'ultimate'},
-                {'type': 'attack', 'times': 16}
+                {'type': 'attack', 'times': 20}
             ]
         )
 

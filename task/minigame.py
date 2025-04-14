@@ -48,30 +48,19 @@ class Minigame:
         press_keyboard('f')  # 按下 f 键
         time.sleep(1)  
 
-        # 获取图片路径
-        dialog_path = get_picture_path('dialog')
-        if not os.path.exists(dialog_path):
-            print(f"文件不存在: {dialog_path}")
-            return
+
 
         # 不停点击（1420, 700），直到图片 dialog 消失
         while True:
-            try:
-                location = pyautogui.locateOnScreen(dialog_path, confidence=0.8)
-            except Exception as e:
-                location = None
-
-            if location is None:
+            if wait_image("dialog", max_attempts=1):
                 break 
             click_coordinate(1420, 700)  
             time.sleep(0.5)  
 
         # 不停按下 f，直到图片 dialog 出现
         while True:
-            try:
-                location = pyautogui.locateOnScreen(dialog_path, confidence=0.8)
-            except Exception as e:
-                location = None
+            if wait_image("dialog", max_attempts=1):
+                break
 
             try:
                 location_retry = pyautogui.locateOnScreen(get_picture_path('retry'), confidence=0.8)
@@ -89,20 +78,12 @@ class Minigame:
                 pyautogui.mouseUp(x, y)  # 松开鼠标
                 print("重试小游戏")
 
-            if location:
-                break
 
             press_keyboard('f') # 推球
             time.sleep(0.1)  
 
-        daMiao = get_picture_path('daMiao')
         while True:
-            try:
-                location = pyautogui.locateOnScreen(daMiao, confidence=0.8)
-            except Exception as e:
-                location = None
-
-            if location:
+            if wait_image("daMiao", max_attempts=1):
                 break 
             click_coordinate(1446, 760)  
             time.sleep(0.5)  

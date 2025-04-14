@@ -17,7 +17,8 @@ def map_jump(coordinates, max_retries=5):
 
     to_main_menu()  # 确保在主菜单界面
     press_keyboard('m')
-    wait_image("return")
+    if(not wait_image("return")):
+        press_keyboard('m')
 
     # 扩大四次地图，缩小一次地图
     click_coordinate(376, 1037)
@@ -102,7 +103,7 @@ def wait_image(image_path, wait_interval=0.5, max_attempts=100):
         result = False
     return result
 
-def wait_and_click_image(image_path, wait_interval=1, max_attempts=15):
+def wait_and_click_image(image_path, wait_interval=1, max_attempts=15, press_time=0.1):
     """
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
     :param window_title: 要激活的窗口标题
@@ -124,7 +125,8 @@ def wait_and_click_image(image_path, wait_interval=1, max_attempts=15):
             x, y = pyautogui.center(location)
 
             pyautogui.mouseDown(x, y)  # 按下鼠标
-            time.sleep(0.1)
+            if press_time > 0:
+                time.sleep(press_time)
             pyautogui.mouseUp(x, y)  # 松开鼠标
             print("成功点击图片！")
             break  # 点击后退出循环
@@ -171,13 +173,38 @@ def to_main_menu():
     通过不断查找并点击“return”按钮，直到找到“daMiao”图像为止。
     """
     while True:
-        # 尝试查找“daMiao”图像，最大尝试次数为2次
-        result = wait_image("daMiao", max_attempts=2)
+        result = is_main_menu()
         if result:
-            # 如果找到“daMiao”图像，说明已经在主菜单，退出循环
             print("已找到 'daMiao' 图像，确认在主菜单界面。")
             break
         else:
             # 如果没有找到“daMiao”图像，点击“return”按钮尝试返回主菜单
-            print("未找到 'daMiao' 图像，点击 'return' 按钮返回主菜单。")
-            wait_and_click_image("return")
+            print("未找到 'daMiao' 图像，返回主菜单。")
+            # if(wait_image("return",max_attempts=1)):
+            #     wait_and_click_image("return")
+            # else:
+            click_coordinate(70,55)
+            click_coordinate(70,55)
+            click_coordinate(70,55)
+            click_coordinate(70,55)
+            click_coordinate(70,55)
+
+
+def is_main_menu():
+    """
+    判断当前界面是否在主菜单。
+    通过查找“daMiao”图像，如果找到则返回True，否则返回False。
+    """
+    # 尝试查找“daMiao”图像
+    if wait_image("daMiao", max_attempts=3):
+        return True
+
+    # 如果未找到“daMiao”，尝试按下“esc”键
+    press_keyboard("esc")
+
+    # 再次查找“shine”图像
+    if wait_image("shine", max_attempts=3):
+        press_keyboard("esc")
+        return True
+
+    return False

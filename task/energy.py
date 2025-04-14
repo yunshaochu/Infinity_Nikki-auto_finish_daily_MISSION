@@ -2,7 +2,7 @@ import time
 
 import pyautogui
 
-from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, map_jump
+from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, map_jump, to_main_menu
 from task.monster_trial import MonsterTrialAutomation
 
 coordinates = [
@@ -14,7 +14,7 @@ coordinates = [
         ]
 
 
-def locate_minigame():
+def locate_minigame(attempts=0):
     map_jump(coordinates)
 
     # 走到传送锚点面前
@@ -26,7 +26,13 @@ def locate_minigame():
 
     # 进入副本
     press_keyboard('f')
-    wait_image("return")
+    if wait_image("return", max_attempts=10):
+        time.sleep(1.4)
+    else:
+        if attempts < 3:
+            locate_minigame(attempts + 1)
+        else:
+            print("Failed to locate minigame after 3 attempts.")
 
 # 魔物试炼幻境（280，500）
 def enter_monster_trial():
@@ -51,7 +57,11 @@ def enter_material_activation(choice_material="bubble", choice_consumable="flowe
     wait_and_click_image(choice_consumable)
     wait_and_click_image("max")
     wait_and_click_image("yes3")
-
+    wait_and_click_image("material_activation")
+    press_keyboard('f')
+    press_keyboard('f')
+    press_keyboard('f')
+    to_main_menu()
 
 
 # 周本（1600，500）

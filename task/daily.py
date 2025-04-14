@@ -4,7 +4,7 @@ import time
 import pyautogui
 
 from Util.get_path import get_image_path, get_picture_path
-from Util.util import click_coordinate, press_keyboard
+from Util.util import click_coordinate, press_keyboard, wait_image
 from 微信ocr import wechat_ocr, OutputType
 
 
@@ -70,6 +70,9 @@ class DailyMissionRecognizer:
                             self.task_queue.add("祝福闪光+等级")
                         elif "幻境" in text_line:
                             self.task_queue.add("祝福闪光+幻境")
+                    elif keyword == "魔气怪":
+                        if "魔物试炼幻境" in text_line:
+                            self.task_queue.add("魔物试炼幻境")
                     else:
                         self.task_queue.add(keyword)
                     break
@@ -79,6 +82,7 @@ class DailyMissionRecognizer:
         执行任务检测流程。
         """
         press_keyboard('l')
+        wait_image('return')
         self.process_coordinates()
         press_keyboard('l')
         print("检测到的任务类型:", self.task_queue)
