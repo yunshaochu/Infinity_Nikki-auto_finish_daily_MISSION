@@ -5,7 +5,7 @@ import time
 import pygetwindow as gw
 
 from Util.get_path import get_picture_path
-from Util.util import wait_and_click_image, click_coordinate
+from Util.util import wait_and_click_image, click_coordinate, is_main_menu, activate_window_by_title
 
 
 class GameLauncher:
@@ -46,21 +46,32 @@ class GameLauncher:
 
 
         # 不停点击，直到图片 launching 出现、更新出现
+        # while True:
+        #     try:
+        #         daMiao = pyautogui.locateOnScreen(get_picture_path('daMiao'), confidence=0.8)
+        #     except Exception as e:
+        #         daMiao = None
+        #
+        #
+        #     if daMiao:
+        #         break
+        #     click_coordinate(900,900)
+        #     time.sleep(0.1)
+
+        count = 0
         while True:
-            try:
-                daMiao = pyautogui.locateOnScreen(get_picture_path('daMiao'), confidence=0.8)
-            except Exception as e:
-                daMiao = None
+            count += 1
+            if count % 5 == 0:
+                activate_window_by_title()
 
-
+            daMiao = is_main_menu()
             if daMiao:
                 break
-
-            click_coordinate(900,900) # 推球
+            click_coordinate(900,900)
             time.sleep(0.1)
 
 if __name__ == "__main__":
-
+    activate_window_by_title()
     # 创建 GameLauncher 实例
     launcher = GameLauncher()
 

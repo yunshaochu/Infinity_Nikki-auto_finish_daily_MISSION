@@ -2,7 +2,8 @@ import time
 
 import pyautogui
 
-from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, map_jump, to_main_menu
+from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, map_jump, to_main_menu, \
+    wait_main_menu, activate_window_by_title
 from task.monster_trial import MonsterTrialAutomation
 
 coordinates = [
@@ -50,7 +51,8 @@ def enter_blessing_glory():
 def enter_material_activation(choice_material="bubble", choice_consumable="flower"):
     click_coordinate(1500, 800)
     wait_and_click_image("go")
-    wait_image("daMiao")
+    # wait_image("daMiao")
+    wait_main_menu()
     press_keyboard('w', duration=2)
     press_keyboard('f')
     wait_and_click_image(choice_material)
@@ -71,6 +73,6 @@ def enter_weekly_dungeon():
     wait_and_click_image("useEnergy")
 
 
-
+activate_window_by_title()
 locate_minigame()
 enter_material_activation()

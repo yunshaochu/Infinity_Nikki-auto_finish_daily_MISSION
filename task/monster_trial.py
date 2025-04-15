@@ -30,7 +30,7 @@ class MonsterTrialAutomation:
 
     def _prepare_environment(self):
         """环境准备工作"""
-        activate_window_by_title()
+        # activate_window_by_title()
         if self.monster == "贪婪囚鸟":
             click_coordinate(375, 200)
             time.sleep(0.5)
@@ -62,5 +62,6 @@ class MonsterTrialAutomation:
 
 
 if __name__ == "__main__":
+    activate_window_by_title()
     automation = MonsterTrialAutomation()
     automation.run()

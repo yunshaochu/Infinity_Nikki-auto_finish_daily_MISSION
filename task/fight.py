@@ -10,7 +10,6 @@ class Fight:
 
     def _walk_to_fight(self, movement_sequence):
         """根据动作序列移动角色"""
-        activate_window_by_title()
 
         for action in movement_sequence:
             act = action.get('type')
@@ -24,6 +23,7 @@ class Fight:
                 time.sleep(action['duration'])
             elif act == 'attack':
                 self._attack_sequence(action.get('times', 16))
+                # result = wait_image('daMiao',max_attempts=10)
                 result = is_main_menu()
                 # 如果没出现"daMiao"说明死了，点一下复活
                 if not result:
@@ -151,5 +151,6 @@ class Fight:
 
 
 if __name__ == "__main__":
+    activate_window_by_title()
     fight = Fight()
     fight.run()

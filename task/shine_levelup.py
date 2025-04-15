@@ -2,8 +2,10 @@ import time
 
 import pyautogui
 
-from Util.util import press_keyboard, wait_and_click_image, wait_image, click_coordinate, get_picture_path, to_main_menu
+from Util.util import press_keyboard, wait_and_click_image, wait_image, click_coordinate, get_picture_path, \
+    to_main_menu, activate_window_by_title
 
+activate_window_by_title()
 press_keyboard('esc')
 wait_and_click_image('shine')
 wait_image('return')

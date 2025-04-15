@@ -71,7 +71,8 @@ def activate_window_by_title(window_title="无限暖暖"):
 def wait_image(image_path, wait_interval=0.5, max_attempts=100):
     """
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
-    :param window_title: 要激活的窗口标题
+    :param image_path: 图片路径
+    :param wait_interval: 等待间隔时间
     :param max_attempts: 最大尝试次数
     """
     image_path = get_picture_path(image_path)
@@ -82,7 +83,7 @@ def wait_image(image_path, wait_interval=0.5, max_attempts=100):
     while attempts < max_attempts:
         try:
             # 激活指定窗口
-            activate_window_by_title()
+            # activate_window_by_title()
 
             # 尝试在屏幕上查找图片
             location = pyautogui.locateOnScreen(image_path, confidence=0.8)
@@ -106,8 +107,10 @@ def wait_image(image_path, wait_interval=0.5, max_attempts=100):
 def wait_and_click_image(image_path, wait_interval=1, max_attempts=15, press_time=0.1):
     """
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
-    :param window_title: 要激活的窗口标题
+    :param image_path: 图片路径
+    :param wait_interval: 等待间隔时间
     :param max_attempts: 最大尝试次数
+    :param press_time: 按住鼠标的时间
     """
     image_path = get_picture_path(image_path)
     print(f"正在寻找图片: {image_path}")
@@ -116,7 +119,7 @@ def wait_and_click_image(image_path, wait_interval=1, max_attempts=15, press_tim
     while attempts < max_attempts:
         try:
             # 激活指定窗口
-            activate_window_by_title()
+            # activate_window_by_title()
 
             # 尝试在屏幕上查找图片
             location = pyautogui.locateOnScreen(image_path, confidence=0.8)
@@ -140,6 +143,7 @@ def wait_and_click_image(image_path, wait_interval=1, max_attempts=15, press_tim
         attempts += 1
     else:
         print(f"达到最大尝试次数 {max_attempts}，仍未找到图片: {image_path}")
+    time.sleep(0.5)
 
 def click_coordinate(x, y):
     """
@@ -147,7 +151,7 @@ def click_coordinate(x, y):
     :param x: 横坐标
     :param y: 纵坐标
     """
-    activate_window_by_title()  # 激活目标窗口
+    # activate_window_by_title()  # 激活目标窗口
     time.sleep(0.1)
     pyautogui.mouseDown(x, y)  # 按下鼠标
     time.sleep(0.1)
@@ -160,7 +164,7 @@ def press_keyboard(key, duration=0.1):
     :param key: 要按下的键
     :param duration: 按住键的持续时间（秒）
     """
-    activate_window_by_title()  # 激活目标窗口
+    # activate_window_by_title()  # 激活目标窗口
     pyautogui.keyDown(key)
     if duration > 0:
         time.sleep(duration)  # 使用time模块的sleep方法
@@ -196,15 +200,36 @@ def is_main_menu():
     通过查找“daMiao”图像，如果找到则返回True，否则返回False。
     """
     # 尝试查找“daMiao”图像
-    if wait_image("daMiao", max_attempts=3):
+    if wait_image("daMiao", max_attempts=1):
         return True
 
     # 如果未找到“daMiao”，尝试按下“esc”键
     press_keyboard("esc")
 
     # 再次查找“shine”图像
-    if wait_image("shine", max_attempts=3):
+    if wait_image("shine", max_attempts=2):
         press_keyboard("esc")
         return True
 
     return False
+
+
+# 等待主页面加载完毕： 等价于damiao加载完毕（wait_image("daMiao")）。但是daMiao的检测太不稳定了，开发本函数替。
+def wait_main_menu(max_retries=100):
+    """
+    等待主页面加载完毕。
+    通过不断查找并点击“return”按钮，直到找到“daMiao”图像为止。
+    """
+    attempts = 0
+    while attempts < max_retries:
+        result = is_main_menu()
+        if result:
+            print("已找到 'daMiao' 图像，确认在主菜单界面。")
+            break
+        else:
+            # 如果没有找到“daMiao”图像，点击“return”按钮尝试返回主菜单
+            print("未找到 'daMiao'图像，返回主菜单。")
+            click_coordinate(70, 55)
+            attempts += 1
+    else:
+        print(f"达到最大重试次数 {max_retries}，仍未找到主菜单界面。")
