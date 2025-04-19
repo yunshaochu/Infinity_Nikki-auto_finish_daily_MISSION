@@ -21,6 +21,7 @@ class GameLauncher:
         启动游戏程序并开始检测图片。
         :param window_title: 游戏窗口标题
         """
+        print("开始启动游戏")
         # 检查可执行文件是否存在
         if os.path.exists(self.exe_path):
             try:

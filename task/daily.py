@@ -83,6 +83,7 @@ class DailyMissionRecognizer:
         """
         执行任务检测流程。
         """
+        print("开始检测日常任务")
         press_keyboard('l')
         wait_image('return')
         self.process_coordinates()

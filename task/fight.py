@@ -68,69 +68,69 @@ class Fight:
 
     def run(self):
         # 示例点位1
-        self.fight_at_location(
-            coordinates=[
-                (1740, 110),
-                (1560, 950),
-                (555, 500),
-                (1600, 1000)
-            ],
-            movement_sequence=[
-                {'type': 'key_down', 'key': 'd'},
-                {'type': 'wait', 'duration': 6},
-                {'type': 'key_up', 'key': 'd'},
-                {'type': 'ultimate'},
-                {'type': 'attack', 'times': 16}
-            ]
-        )
+        # self.fight_at_location(
+        #     coordinates=[
+        #         (1740, 110),
+        #         (1560, 950),
+        #         (555, 500),
+        #         (1600, 1000)
+        #     ],
+        #     movement_sequence=[
+        #         {'type': 'key_down', 'key': 'd'},
+        #         {'type': 'wait', 'duration': 6},
+        #         {'type': 'key_up', 'key': 'd'},
+        #         {'type': 'ultimate'},
+        #         {'type': 'attack', 'times': 16}
+        #     ]
+        # )
 
         # 示例点位2
-        self.fight_at_location(
-            coordinates=[
-                (1740, 110),
-                (1560, 950),
-                (580, 730),
-                (1600, 1000)
-            ],
-            movement_sequence=[
-                {'type': 'key_down', 'key': 'd'},
-                {'type': 'wait', 'duration': 17},
-                {'type': 'key_up', 'key': 'd'},
-                {'type': 'ultimate'},
-                {'type': 'attack', 'times': 16}
-            ]
-        )
+        # self.fight_at_location(
+        #     coordinates=[
+        #         (1740, 110),
+        #         (1560, 950),
+        #         (580, 730),
+        #         (1600, 1000)
+        #     ],
+        #     movement_sequence=[
+        #         {'type': 'key_down', 'key': 'd'},
+        #         {'type': 'wait', 'duration': 17},
+        #         {'type': 'key_up', 'key': 'd'},
+        #         {'type': 'ultimate'},
+        #         {'type': 'attack', 'times': 16}
+        #     ]
+        # )
 
         # 绿野微风
-        self.fight_at_location(
-            coordinates=[
-                (1740, 110),
-                (1500, 500),
-                (1515, 460),
-                (1600, 1000)
-            ],
-            movement_sequence=[
-                {'type': 'key_down', 'key': 's'},
-                {'type': 'key_down', 'key': 'd'},
-                {'type': 'wait', 'duration': 5},
-                {'type': 'press', 'key': 'space'},
-                {'type': 'wait', 'duration': 20},
-                {'type': 'key_up', 'key': 's'},
-                {'type': 'key_up', 'key': 'd'},
-                {'type': 'key_down', 'key': 'w'},
-                {'type': 'wait', 'duration': 4},
-                {'type': 'key_up', 'key': 'w'},
-                {'type': 'key_down', 'key': 's'},
-                {'type': 'key_down', 'key': 'd'},
-                {'type': 'wait', 'duration': 4},
-                {'type': 'key_up', 'key': 's'},
-                {'type': 'key_up', 'key': 'd'},
-                {'type': 'ultimate'},
-                {'type': 'attack', 'times': 20}
-            ]
-        )
-
-        # 小石头树田
+        # self.fight_at_location(
+        #     coordinates=[
+        #         (1740, 110),
+        #         (1500, 500),
+        #         (1515, 460),
+        #         (1600, 1000)
+        #     ],
+        #     movement_sequence=[
+        #         {'type': 'key_down', 'key': 's'},
+        #         {'type': 'key_down', 'key': 'd'},
+        #         {'type': 'wait', 'duration': 5},
+        #         {'type': 'press', 'key': 'space'},
+        #         {'type': 'wait', 'duration': 20},
+        #         {'type': 'key_up', 'key': 's'},
+        #         {'type': 'key_up', 'key': 'd'},
+        #         {'type': 'key_down', 'key': 'w'},
+        #         {'type': 'wait', 'duration': 4},
+        #         {'type': 'key_up', 'key': 'w'},
+        #         {'type': 'key_down', 'key': 's'},
+        #         {'type': 'key_down', 'key': 'd'},
+        #         {'type': 'wait', 'duration': 4},
+        #         {'type': 'key_up', 'key': 's'},
+        #         {'type': 'key_up', 'key': 'd'},
+        #         {'type': 'ultimate'},
+        #         {'type': 'attack', 'times': 20}
+        #     ]
+        # )
+        #
+        # # 小石头树田
         self.fight_at_location(
             coordinates=[
                 (1740, 110),
