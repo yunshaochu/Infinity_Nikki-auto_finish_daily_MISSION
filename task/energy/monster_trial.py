@@ -10,8 +10,8 @@ class MonsterTrialAutomation:
     def __init__(self):
         self.config_path = get_config_path()
         self.config = self._load_config()
-        self.monster = self.config['魔物试炼幻境']['怪物']
-        self.target = self.config['魔物试炼幻境']['副本']
+        self.monster = self.config['副本设置']['魔物试炼幻境']['怪物']
+        self.target = self.config['副本设置']['魔物试炼幻境']['副本']
         self.ocr_results = None
 
     def _load_config(self):
@@ -40,7 +40,7 @@ class MonsterTrialAutomation:
         image_path = get_picture_path(self.monster)
         self.ocr_results = wechat_ocr(image_path)
 
-    def _execute_actions(self):
+    def _execute_actions(self,num):
         """执行自动化操作序列"""
         target_pos = self.find_target_coordinates(self.ocr_results, self.target)
 
@@ -51,17 +51,18 @@ class MonsterTrialAutomation:
         print(f"目标 '{self.target}' 的坐标为: x={target_pos[0]}, y={target_pos[1]}")
         click_coordinate(*target_pos)
         wait_and_click_image("quickChallenge")
-        # wait_and_click_image("max")
+        if num == "all":
+            wait_and_click_image("max")
         wait_and_click_image("useEnergy")
 
-    def run(self):
+    def run(self,num):
         """执行完整自动化流程"""
         self._prepare_environment()
         self._process_ocr()
-        self._execute_actions()
+        self._execute_actions(num)
 
 
 if __name__ == "__main__":
     activate_window_by_title()
     automation = MonsterTrialAutomation()
-    automation.run()
+    automation.run("one")

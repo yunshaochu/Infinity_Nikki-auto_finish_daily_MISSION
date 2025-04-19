@@ -11,6 +11,7 @@ def map_jump(coordinates, max_retries=5):
     :param coordinates: 坐标列表
     :param max_retries: 最大重试次数
     """
+    print("跳转地图")
     if max_retries <= 0:
         print("'地图传送'达到最大重试次数，停止重试。")
         return
@@ -42,8 +43,8 @@ def map_jump(coordinates, max_retries=5):
                 map_jump(coordinates, max_retries - 1)  # 减少重试次数
                 break
         time.sleep(0.5)
-    wait_image("daMiao")
-
+    # wait_image("daMiao")
+    wait_main_menu()
 
 
 def activate_window_by_title(window_title="无限暖暖"):

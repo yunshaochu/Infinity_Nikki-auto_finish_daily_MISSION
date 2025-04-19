@@ -27,6 +27,8 @@ class Minigame:
         模拟走路到小游戏的具体位置。
         """
         # activate_window_by_title()
+        map_jump(self.coordinates)
+
         pyautogui.keyDown('a')
         time.sleep(2.3)
         press_keyboard('space')
@@ -97,7 +99,6 @@ class Minigame:
 if __name__ == "__main__":
     activate_window_by_title()
     locator = Minigame()
-    map_jump(locator.coordinates)
     locator.walk_to_minigame()
 
     # locator.walk_to_minigame()

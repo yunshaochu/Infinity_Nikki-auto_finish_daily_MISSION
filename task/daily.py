@@ -36,14 +36,31 @@ class DailyMissionRecognizer:
         for x, y in self.coordinates:
             try:
                 click_coordinate(x, y)
-                self.capture_and_analyze()
+                self.capture_and_analyze_mission_detail()
             except Exception as e:
                 print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
                 continue
 
+    def isFinish(self):
+        """
+        看看每日任务活跃度是否到达500
+        """
+        press_keyboard('l')
+        wait_image('return')
+        time.sleep(1)
+        pyautogui.screenshot(
+            self.screenshot_path,
+            region=(985, 90, 1065 - 985, 130 - 90)  # 计算区域宽高
+        )
+        res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
+        press_keyboard('l')
+        if "500" in res_text:
+            return True
+        else:
+            return False
 
 
-    def capture_and_analyze(self):
+    def capture_and_analyze_mission_detail(self):
         """
         3. 截图指定区域并调用OCR分析结果。
         """
@@ -92,8 +109,9 @@ class DailyMissionRecognizer:
         return self.task_queue
 
 
-# 实例化并运行任务检测
 if __name__ == "__main__":
     activate_window_by_title()
     recognizer = DailyMissionRecognizer()
-    recognizer.run()
+    # recognizer.run()
+
+    print(recognizer.isFinish())

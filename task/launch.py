@@ -10,9 +10,6 @@ from Util.util import wait_and_click_image, click_coordinate, is_main_menu, acti
 
 class GameLauncher:
     def __init__(self):
-        """
-        初始化游戏启动器。
-        """
         self.exe_path = r"D:\game\nikki\InfinityNikki Launcher\launcher.exe"
 
 
@@ -22,42 +19,27 @@ class GameLauncher:
         :param window_title: 游戏窗口标题
         """
         print("开始启动游戏")
-        # 检查可执行文件是否存在
-        if os.path.exists(self.exe_path):
+        activate_window_by_title()
+        if not is_main_menu():
+            if os.path.exists(self.exe_path):
+                try:
+                    subprocess.run([self.exe_path])
+                    print("程序已启动，开始检测图片...")
+                except subprocess.CalledProcessError as e:
+                    print(f"启动程序时出错: {e}")
+                except Exception as e:
+                    print(f"发生未知错误: {e}")
+            else:
+                print("指定路径的文件不存在，请检查路径是否正确。")
+                return
+
+            time.sleep(5)
+
+            # 开始检测图片并点击
             try:
-                # 启动程序
-                subprocess.run([self.exe_path])
-                print("程序已启动，开始检测图片...")
-            except subprocess.CalledProcessError as e:
-                print(f"启动程序时出错: {e}")
-            except Exception as e:
-                print(f"发生未知错误: {e}")
-        else:
-            print("指定路径的文件不存在，请检查路径是否正确。")
-            return
-
-        # 等待一段时间以确保程序完全加载
-        time.sleep(5)
-
-        # 开始检测图片并点击
-        try:
-            wait_and_click_image("launch")
-        except KeyboardInterrupt:
-            print("程序被用户中断。")
-
-
-        # 不停点击，直到图片 launching 出现、更新出现
-        # while True:
-        #     try:
-        #         daMiao = pyautogui.locateOnScreen(get_picture_path('daMiao'), confidence=0.8)
-        #     except Exception as e:
-        #         daMiao = None
-        #
-        #
-        #     if daMiao:
-        #         break
-        #     click_coordinate(900,900)
-        #     time.sleep(0.1)
+                wait_and_click_image("launch")
+            except KeyboardInterrupt:
+                print("程序被用户中断。")
 
         count = 0
         while True:
@@ -73,8 +55,6 @@ class GameLauncher:
 
 if __name__ == "__main__":
     activate_window_by_title()
-    # 创建 GameLauncher 实例
     launcher = GameLauncher()
 
-    # 启动游戏并执行相关操作
     launcher.launch_game()

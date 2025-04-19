@@ -5,6 +5,7 @@ from Util.util import press_keyboard, activate_window_by_title, map_jump, wait_i
 
 class Fight:
     def __init__(self):
+        print("开始战斗")
         pass
 
 
@@ -64,25 +65,26 @@ class Fight:
 
     def fight_at_location(self, coordinates, movement_sequence):
         map_jump(coordinates)
+        print("开始寻路")
         self._walk_to_fight(movement_sequence)
 
     def run(self):
         # 示例点位1
-        # self.fight_at_location(
-        #     coordinates=[
-        #         (1740, 110),
-        #         (1560, 950),
-        #         (555, 500),
-        #         (1600, 1000)
-        #     ],
-        #     movement_sequence=[
-        #         {'type': 'key_down', 'key': 'd'},
-        #         {'type': 'wait', 'duration': 6},
-        #         {'type': 'key_up', 'key': 'd'},
-        #         {'type': 'ultimate'},
-        #         {'type': 'attack', 'times': 16}
-        #     ]
-        # )
+        self.fight_at_location(
+            coordinates=[
+                (1740, 110),
+                (1560, 950),
+                (555, 500),
+                (1600, 1000)
+            ],
+            movement_sequence=[
+                {'type': 'key_down', 'key': 'd'},
+                {'type': 'wait', 'duration': 6},
+                {'type': 'key_up', 'key': 'd'},
+                {'type': 'ultimate'},
+                {'type': 'attack', 'times': 16}
+            ]
+        )
 
         # 示例点位2
         # self.fight_at_location(
