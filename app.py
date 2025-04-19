@@ -39,13 +39,14 @@ def is_new_week(weekly_energy_time: str) -> bool:
 
 
 def main():
+    config = load_task_config()
+
     # 启动游戏
-    GameLauncher().launch_game()
+    GameLauncher().launch_game(config["游戏启动路径"])
     # 获取每日任务
     recognizer = DailyMissionRecognizer()
     daily = recognizer.run()
     # 加载任务配置
-    config = load_task_config()
     task_list = config.get("task_list", [])
     # 总之先挖掘
     DiggingTask().execute()
@@ -81,27 +82,27 @@ def main():
                 num = "max"
             else:
                 num = "one"
-            energyTask.enter_material_activation(num)
+            energyTask.enter_material_activation(num=num,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
         elif name == "魔物试炼幻境":
             if config["每日体力"] == "魔物试炼幻境":
                 num = "max"
             else:
                 num = "one"
-            energyTask.enter_monster_trial(num)
+            energyTask.enter_monster_trial(num=num)
 
         elif name == "祝福闪光幻境":
             if config["每日体力"] == "祝福闪光幻境":
                 num = "max"
             else:
                 num = "one"
-            energyTask.enter_blessing_glory(num)
+            energyTask.enter_blessing_glory(num=num)
 
         elif name == "活跃能量":
             # 如果num是one，说明每日体力还没清；如果是max，说明体力在前三个任务清理完毕了
             if num == "one":
                 choose = config["每日体力"]
-                energyTask.daily_run(choose)
+                energyTask.daily_run(choose,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
         elif name == "提升祝福闪光等级":
             task = ShineLevelUpTask()

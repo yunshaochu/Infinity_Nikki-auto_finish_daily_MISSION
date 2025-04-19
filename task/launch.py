@@ -13,17 +13,20 @@ class GameLauncher:
         self.exe_path = r"D:\game\nikki\InfinityNikki Launcher\launcher.exe"
 
 
-    def launch_game(self):
+    def launch_game(self, exe_path=r"D:\game\nikki\InfinityNikki Launcher\launcher.exe"):
         """
         启动游戏程序并开始检测图片。
+        :param exe_path:
         :param window_title: 游戏窗口标题
         """
         print("开始启动游戏")
+        if exe_path == '':
+            exe_path = self.exe_path
         activate_window_by_title()
         if not is_main_menu():
-            if os.path.exists(self.exe_path):
+            if os.path.exists(exe_path):
                 try:
-                    subprocess.run([self.exe_path])
+                    subprocess.run([exe_path])
                     print("程序已启动，开始检测图片...")
                 except subprocess.CalledProcessError as e:
                     print(f"启动程序时出错: {e}")
@@ -51,8 +54,7 @@ class GameLauncher:
             if wait_image("update", max_attempts=1):
                 wait_and_click_image("update")
 
-            daMiao = is_main_menu()
-            if daMiao:
+            if is_main_menu():
                 break
             click_coordinate(900,900)
             time.sleep(0.1)

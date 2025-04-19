@@ -86,9 +86,9 @@ class EnergyTask:
         click_coordinate(1350, 335) # 保险措施，如果此时体力不够/周本次数耗尽，要点击这里关闭页面
         to_main_menu()
 
-    def daily_run(self, choose):
+    def daily_run(self, choose, choice_material="bubble", choice_consumable="flower"):
         if choose == "素材激化幻境":
-           self.enter_material_activation(num="all")
+           self.enter_material_activation(num="all",choice_material=choice_material, choice_consumable=choice_consumable)
         elif choose == "魔物试炼幻境":
             self.enter_monster_trial(num="all")
         elif choose == "祝福闪光幻境":
