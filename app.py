@@ -103,7 +103,7 @@ def main():
                 choose = config["每日体力"]
                 energyTask.daily_run(choose)
 
-        elif name == "祝福闪光+等级":
+        elif name == "提升祝福闪光等级":
             task = ShineLevelUpTask()
             task.execute()
 

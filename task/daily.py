@@ -93,9 +93,9 @@ class DailyMissionRecognizer:
                     if keyword == "祝福闪光":
                         # 检查是否同时包含“等级”或“幻境”
                         if "等级" in text_line:
-                            self.task_queue.add("祝福闪光+等级")
+                            self.task_queue.add("提升祝福闪光等级")
                         elif "幻境" in text_line:
-                            self.task_queue.add("祝福闪光+幻境")
+                            self.task_queue.add("祝福闪光幻境")
                     elif keyword == "魔气怪":
                         if "魔物试炼幻境" in text_line:
                             self.task_queue.add("魔物试炼幻境")
