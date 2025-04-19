@@ -5,7 +5,7 @@ import time
 import pygetwindow as gw
 
 from Util.get_path import get_picture_path
-from Util.util import wait_and_click_image, click_coordinate, is_main_menu, activate_window_by_title
+from Util.util import wait_and_click_image, click_coordinate, is_main_menu, activate_window_by_title, wait_image
 
 
 class GameLauncher:
@@ -35,17 +35,21 @@ class GameLauncher:
 
             time.sleep(5)
 
-            # 开始检测图片并点击
-            try:
-                wait_and_click_image("launch")
-            except KeyboardInterrupt:
-                print("程序被用户中断。")
+
+            wait_and_click_image("launch")
+            if wait_image("update2",max_attempts=10):
+                wait_and_click_image("update2")
+                wait_and_click_image("launch",max_attempts=600)
+
+
 
         count = 0
         while True:
             count += 1
-            if count % 5 == 0:
+            if count % 4 == 0:
                 activate_window_by_title()
+            if wait_image("update", max_attempts=1):
+                wait_and_click_image("update")
 
             daMiao = is_main_menu()
             if daMiao:

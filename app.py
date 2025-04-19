@@ -1,5 +1,5 @@
 import json
-from Util.util import map_jump
+from Util.util import map_jump, close_game_window
 from task.daily import DailyMissionRecognizer
 from task.dig import DiggingTask
 from task.energy.energy import EnergyTask
@@ -38,23 +38,18 @@ def is_new_week(weekly_energy_time: str) -> bool:
     return (last_year, last_week) != (now_year, now_week)
 
 
-if __name__ == "__main__":
+def main():
     # 启动游戏
     GameLauncher().launch_game()
-
     # 获取每日任务
     recognizer = DailyMissionRecognizer()
     daily = recognizer.run()
-
     # 加载任务配置
     config = load_task_config()
     task_list = config.get("task_list", [])
-
     # 总之先挖掘
     DiggingTask().execute()
-
     energyTask = EnergyTask()
-
     weekly_energy_time = config["上次打周本的时间"]
     # 如果weekly_energy_time和当前时间相比，不属于同一个星期内，那么返回true。比如2025-4-19是周六，2025-4-20是同一周的周日，那么是false；2025-4-21是不同周的星期一，可以true
     if is_new_week(weekly_energy_time):
@@ -66,7 +61,6 @@ if __name__ == "__main__":
             json.dump(config, f, ensure_ascii=False, indent=4)
     else:
         print("不可打周本")
-
     for task in task_list:
         name = task["name"]
         if not task.get("enabled", True):
@@ -119,6 +113,17 @@ if __name__ == "__main__":
         # 检查是否完成每日活跃度
         if recognizer.isFinish():
             break
-
+    recognizer.get_diamond()
     task = SeasonPassTask()
     task.execute()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(e)
+    finally:
+        config = load_task_config()
+        if config["完成每日任务后关闭游戏"]:
+            close_game_window()

@@ -41,6 +41,15 @@ class DailyMissionRecognizer:
                 print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
                 continue
 
+    def get_diamond(self):
+        press_keyboard('l')
+        wait_image('return')
+        time.sleep(3)
+        click_coordinate(1210,75)
+        click_coordinate(1210,75)
+        click_coordinate(1210,75)
+        press_keyboard('l')
+
     def isFinish(self):
         """
         看看每日任务活跃度是否到达500

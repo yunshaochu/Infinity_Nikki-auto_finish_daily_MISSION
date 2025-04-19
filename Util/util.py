@@ -234,3 +234,12 @@ def wait_main_menu(max_retries=100):
             attempts += 1
     else:
         print(f"达到最大重试次数 {max_retries}，仍未找到主菜单界面。")
+
+def close_game_window(window_title="无限暖暖"):
+    # 尝试根据标题关闭窗口
+    try:
+        window = gw.getWindowsWithTitle(window_title)[0]
+        window.close()
+        print(f"已尝试关闭窗口: {window_title}")
+    except IndexError:
+        print(f"未找到窗口: {window_title}")
