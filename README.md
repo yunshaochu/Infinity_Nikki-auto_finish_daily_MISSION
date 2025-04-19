@@ -1,6 +1,8 @@
 
 
-# nikki-daily_MISSION
+# Infinity_Nikki-auto_finish_daily_MISSION
+
+自动完成无限暖暖的每日任务。
 
 前提：电脑能以中画质以上`流畅`运行游戏。
 
