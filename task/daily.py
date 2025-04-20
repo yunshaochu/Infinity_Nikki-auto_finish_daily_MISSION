@@ -68,6 +68,13 @@ class DailyMissionRecognizer:
         else:
             return False
 
+    def Finish_data(self):
+        """
+        看看每日任务活跃度是否到达500
+        """
+        res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
+
+        return res_text[0]
 
     def capture_and_analyze_mission_detail(self):
         """

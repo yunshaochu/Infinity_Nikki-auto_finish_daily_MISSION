@@ -62,6 +62,9 @@ def main():
             json.dump(config, f, ensure_ascii=False, indent=4)
     else:
         print("不可打周本")
+
+
+
     for task in task_list:
         name = task["name"]
         if not task.get("enabled", True):
@@ -78,6 +81,12 @@ def main():
             Minigame().walk_to_minigame()
 
         elif name == "素材激化幻境":
+            """
+            解释思路：
+            素材激化幻境需要消耗体力，如果只是为了做每日任务而不是想刷材料，那就不能吧体力耗光。所以这里加判断，如果想刷的副本(每日体力)刚好就是素材激化幻境，那么num = "max"吧体力刷光，否则只刷一次。
+            """
+            if "活跃能量" in task_list and 500-recognizer.Finish_data()<=200: # 如果每日任务中有"活跃能量"，且每日任务进度只剩下200了，则不做这个任务了
+                continue
             if config["每日体力"] == "素材激化幻境":
                 num = "max"
             else:
@@ -85,6 +94,8 @@ def main():
             energyTask.enter_material_activation(num=num,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
         elif name == "魔物试炼幻境":
+            if "活跃能量" in task_list and 500-recognizer.Finish_data()<=200:
+                continue
             if config["每日体力"] == "魔物试炼幻境":
                 num = "max"
             else:
@@ -92,6 +103,8 @@ def main():
             energyTask.enter_monster_trial(num=num)
 
         elif name == "祝福闪光幻境":
+            if "活跃能量" in task_list and 500-recognizer.Finish_data()<=200:
+                continue
             if config["每日体力"] == "祝福闪光幻境":
                 num = "max"
             else:
@@ -126,5 +139,5 @@ if __name__ == "__main__":
         print(e)
     finally:
         config = load_task_config()
-        if config["完成每日任务后关闭游戏"]:
+        if config.get("完成每日任务后关闭游戏", False):
             close_game_window()
