@@ -132,6 +132,7 @@ def wait_and_click_image(image_path, wait_interval=1, max_attempts=15, press_tim
             if press_time > 0:
                 time.sleep(press_time)
             pyautogui.mouseUp(x, y)  # 松开鼠标
+            # click_coordinate(x, y)
             print("成功点击图片！")
             break  # 点击后退出循环
         except pyautogui.ImageNotFoundException:

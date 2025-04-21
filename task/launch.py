@@ -22,7 +22,7 @@ class GameLauncher:
         print("开始启动游戏")
         if exe_path == '':
             exe_path = self.exe_path
-        activate_window_by_title()
+        # activate_window_by_title()
         if not is_main_menu():
             if os.path.exists(exe_path):
                 try:

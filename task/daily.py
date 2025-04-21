@@ -64,8 +64,10 @@ class DailyMissionRecognizer:
         res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
         press_keyboard('l')
         if "500" in res_text:
+            print("活跃度到达500")
             return True
         else:
+            print("活跃度未到达500")
             return False
 
     def Finish_data(self):
