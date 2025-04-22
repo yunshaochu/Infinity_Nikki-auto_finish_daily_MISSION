@@ -242,5 +242,8 @@ def close_game_window(window_title="无限暖暖"):
         window = gw.getWindowsWithTitle(window_title)[0]
         window.close()
         print(f"已尝试关闭窗口: {window_title}")
+        time.sleep(60)
+        window = gw.getWindowsWithTitle(window_title)[0]
+        window.close()
     except IndexError:
         print(f"未找到窗口: {window_title}")

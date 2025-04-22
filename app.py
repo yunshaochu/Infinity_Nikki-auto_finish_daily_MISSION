@@ -66,6 +66,7 @@ def main():
     else:
         print("不可打周本")
 
+    num = "one"
 
 
     for task in task_list:
@@ -75,9 +76,9 @@ def main():
         if name not in daily:
             continue
 
-        num = "one"
         # 任务执行
         if name == "魔气怪":
+            print("--------------------------------------------------魔气怪---------------------------------------------------------")
             Fight().run()
 
         elif name == "小游戏":
@@ -91,32 +92,39 @@ def main():
             if "活跃能量" in task_list and 500-recognizer.Finish_data()<=200: # 如果每日任务中有"活跃能量"，且每日任务进度只剩下200了，则不做这个任务了
                 continue
             if config["每日体力"] == "素材激化幻境":
+                print("每日体力:素材激化幻境")
                 num = "max"
             else:
                 num = "one"
+            print("--------------------------------------------------素材激化幻境---------------------------------------------------------")
             energyTask.enter_material_activation(num=num,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
         elif name == "魔物试炼幻境":
             if "活跃能量" in task_list and 500-recognizer.Finish_data()<=200:
                 continue
             if config["每日体力"] == "魔物试炼幻境":
+                print("每日体力:魔物试炼幻境")
                 num = "max"
             else:
                 num = "one"
+            print("--------------------------------------------------魔物试炼幻境---------------------------------------------------------")
             energyTask.enter_monster_trial(num=num)
 
         elif name == "祝福闪光幻境":
             if "活跃能量" in task_list and 500-recognizer.Finish_data()<=200:
                 continue
             if config["每日体力"] == "祝福闪光幻境":
+                print("每日体力:祝福闪光幻境")
                 num = "max"
             else:
                 num = "one"
+            print("--------------------------------------------------祝福闪光幻境---------------------------------------------------------")
             energyTask.enter_blessing_glory(num=num)
 
         elif name == "活跃能量":
             # 如果num是one，说明每日体力还没清；如果是max，说明体力在前三个任务清理完毕了
             if num == "one":
+                num = "max"
                 choose = config["每日体力"]
                 energyTask.daily_run(choose,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
