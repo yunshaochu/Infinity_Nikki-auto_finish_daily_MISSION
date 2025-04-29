@@ -38,14 +38,12 @@ class GameLauncher:
 
             time.sleep(5)
 
-
             wait_and_click_image("launch")
             if wait_image("update2",max_attempts=10):
                 wait_and_click_image("update2")
                 wait_and_click_image("launch",max_attempts=600)
 
-
-
+        start_time = time.time()
         count = 0
         while True:
             count += 1
@@ -58,6 +56,10 @@ class GameLauncher:
                 break
             click_coordinate(900,900)
             time.sleep(0.1)
+
+            # 检查是否超时
+            if time.time() - start_time > 1200:  # 20分钟 = 1200秒
+                raise TimeoutError("启动游戏超时，超过20分钟未进入主菜单")
 
 if __name__ == "__main__":
     activate_window_by_title()

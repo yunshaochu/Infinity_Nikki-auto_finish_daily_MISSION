@@ -3,22 +3,29 @@ import time
 import pygetwindow as gw
 
 from Util.get_path import get_picture_path
+from Util.ocr_handle import capture_and_analyze_mission_detail
+from 微信ocr import wechat_ocr, OutputType
 
 
-def map_jump(coordinates, max_retries=5):
+def map_jump(coordinates, destination="花焰群岛", screenshot_path="map"):
     """
     地图传送
-    :param coordinates: 坐标列表
+    :param coordinates: 列表，比如
+    coordinates = [
+            (1740, 110),
+            (1644, 720),
+            (630, 170),
+            (1400, 625),
+            (1600, 1000)
+        ]
+
     :param max_retries: 最大重试次数
     """
     print("跳转地图")
-    if max_retries <= 0:
-        print("'地图传送'达到最大重试次数，停止重试。")
-        return
 
     to_main_menu()  # 确保在主菜单界面
     press_keyboard('m')
-    if(not wait_image("return")):
+    if not wait_image("return"):
         press_keyboard('m')
 
     # 扩大四次地图，缩小一次地图
@@ -28,22 +35,45 @@ def map_jump(coordinates, max_retries=5):
     click_coordinate(376, 1037)
     click_coordinate(60, 1040)
 
-    for index, (x, y) in enumerate(coordinates):
-        print("index:" + str(index))
+    click_coordinate(1700, 100)
+    # 鼠标移动到（1555，555）
+    pyautogui.moveTo(1555, 555)
+    # 鼠标滚轮向下滑动1000
+    pyautogui.scroll(-1000)
+
+    time.sleep(1)
+
+    screenshot_path = get_picture_path(screenshot_path)
+    region = (1300, 100, 1850 - 1300, 1000 - 100) # 截图区域，氛围是将要跳转的地图名称列表
+    target_pos = capture_and_analyze_mission_detail(region,screenshot_path,destination)
+
+
+
+    if not target_pos:
+        click_coordinate(1600, 300)
+        time.sleep(1)
+        # 鼠标移动到（1555，555）
+        pyautogui.moveTo(1555, 555)
+        # 鼠标滚轮向下滑动1000
+        pyautogui.scroll(-1000)
+        target_pos = capture_and_analyze_mission_detail(region,screenshot_path,destination)
+
+    # 把坐标转为相对于屏幕左上角的坐标，1300 100是截图的图片左上角顶点
+    target_pos = list(target_pos)
+    target_pos[0] = target_pos[0] + 1300
+    target_pos[1] = target_pos[1] + 100
+    click_coordinate(*target_pos)
+    click_coordinate(*target_pos)
+    click_coordinate(*target_pos)
+
+    time.sleep(0.5)
+
+    for x, y in coordinates:
         click_coordinate(x, y)
-        if index == 0:
-            result = wait_image('wish_wilderness', max_attempts=3)
-            if not result:
-                print("没找到图像'心愿原野'")
-                click_coordinate(x, y)
-        if index == len(coordinates) - 2:
-            result = wait_image('teleport', max_attempts=5)
-            if not result:
-                print("没找到图像'传送'，重新打开地图")
-                map_jump(coordinates, max_retries - 1)  # 减少重试次数
-                break
         time.sleep(0.5)
-    # wait_image("daMiao")
+
+    wait_and_click_image('teleport', max_attempts=5)
+
     wait_main_menu()
 
 
@@ -156,7 +186,7 @@ def click_coordinate(x, y):
     # activate_window_by_title()  # 激活目标窗口
     time.sleep(0.1)
     pyautogui.mouseDown(x, y)  # 按下鼠标
-    time.sleep(0.1)
+    time.sleep(0.2)
     pyautogui.mouseUp(x, y)  # 松开鼠标
     time.sleep(1)  # 等待界面加载
 

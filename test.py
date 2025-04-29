@@ -1,3 +1,7 @@
-from Util.util import close_game_window
+import pyautogui
 
-close_game_window()
+from Util.util import map_jump, click_coordinate
+
+coordinates=[(555, 500)]
+
+map_jump(coordinates,destination="花焰群岛")

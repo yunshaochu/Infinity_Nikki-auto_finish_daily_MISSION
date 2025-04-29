@@ -1,5 +1,5 @@
 import json
-from Util.util import map_jump, close_game_window
+from Util.util import close_game_window
 from task.daily import DailyMissionRecognizer
 from task.dig import DiggingTask
 from task.energy.energy import EnergyTask

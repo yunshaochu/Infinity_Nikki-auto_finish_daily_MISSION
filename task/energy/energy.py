@@ -2,7 +2,7 @@ import time
 
 import pyautogui
 
-from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, map_jump, to_main_menu, \
+from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, to_main_menu, \
     wait_main_menu
 from task.energy.blessing_glory import BlessingGlory
 from task.energy.monster_trial import MonsterTrialAutomation
@@ -17,28 +17,29 @@ class EnergyTask:
             (1600, 1000)
         ]
 
-    def locate_minigame(self, attempts=0):
-        map_jump(self.coordinates)
 
-        # 走到传送锚点面前
-        pyautogui.keyDown('a')
-        pyautogui.keyDown('w')
-        time.sleep(1.4)
-        pyautogui.keyUp('a')
-        pyautogui.keyUp('w')
 
-        # 进入副本
-        press_keyboard('f')
-        if wait_image("return", max_attempts=10):
-            time.sleep(1.4)
-        else:
-            if attempts < 3:
-                self.locate_minigame(attempts + 1)
-            else:
-                print("Failed to locate minigame after 3 attempts.")
+
+    def open_energy(self, attempts=0):
+        """
+        打开体力副本
+        :return:
+        """
+        press_keyboard('l')
+        wait_image('return')
+        click_coordinate(1200, 250)
+        wait_image('return')
+
+        # if wait_image("return", max_attempts=10):
+        #     time.sleep(1.4)
+        # else:
+        #     if attempts < 3:
+        #         self.open_energy(attempts + 1)
+        #     else:
+        #         print("Failed to locate minigame after 3 attempts.")
 
     def enter_monster_trial(self, num="one"):
-        self.locate_minigame()
+        self.open_energy()
         click_coordinate(280, 500)
         automation = MonsterTrialAutomation()
         automation.run(num)
@@ -47,7 +48,7 @@ class EnergyTask:
         to_main_menu()
 
     def enter_blessing_glory(self, num="one"):
-        self.locate_minigame()
+        self.open_energy()
         click_coordinate(500, 800)
         automation = BlessingGlory()
         automation.run("num")
@@ -56,7 +57,7 @@ class EnergyTask:
         to_main_menu()
 
     def enter_material_activation(self, num="one", choice_material="bubble", choice_consumable="flower"):
-        self.locate_minigame()
+        self.open_energy()
         click_coordinate(1500, 800)
         wait_and_click_image("go")
         # wait_image("daMiao")
@@ -78,7 +79,7 @@ class EnergyTask:
         to_main_menu()
 
     def enter_weekly_dungeon(self):
-        self.locate_minigame()
+        self.open_energy()
         click_coordinate(1600, 500)
         wait_and_click_image("quickChallenge")
         wait_and_click_image("useEnergy")

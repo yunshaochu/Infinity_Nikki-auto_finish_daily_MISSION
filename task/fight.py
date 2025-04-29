@@ -48,13 +48,13 @@ class Fight:
         pyautogui.mouseUp(button='left')
         pyautogui.keyUp('q')
 
-        # 开大后一瞬间是没有daMiao的，如何有说明开大失败了，再开一次
-        if not wait_image('daMiao', max_attempts=1):
-            pyautogui.keyDown('q')
-            pyautogui.mouseDown(button='left')
-            time.sleep(0.1)
-            pyautogui.mouseUp(button='left')
-            pyautogui.keyUp('q')
+        # 如果开启了大招动画，开大后一瞬间是没有daMiao的，如何有说明开大失败了，再开一次
+        # if not wait_image('daMiao', max_attempts=1):
+        #     pyautogui.keyDown('q')
+        #     pyautogui.mouseDown(button='left')
+        #     time.sleep(0.1)
+        #     pyautogui.mouseUp(button='left')
+        #     pyautogui.keyUp('q')
 
     def _attack_sequence(self, times):
         for _ in range(times):
@@ -63,36 +63,37 @@ class Fight:
             pyautogui.mouseUp()
             time.sleep(1)
 
-    def fight_at_location(self, coordinates, movement_sequence):
-        map_jump(coordinates)
+    def fight_at_location(self, coordinates, destination, movement_sequence):
+        map_jump(coordinates=coordinates,destination=destination)
         print("开始寻路")
         self._walk_to_fight(movement_sequence)
 
     def run(self):
+        """
+
+        coordinates 写传送点在地图上的坐标
+        :return:
+        """
         # 示例点位1
-        self.fight_at_location(
-            coordinates=[
-                (1740, 110),
-                (1560, 950),
-                (555, 500),
-                (1600, 1000)
-            ],
-            movement_sequence=[
-                {'type': 'key_down', 'key': 'd'},
-                {'type': 'wait', 'duration': 6},
-                {'type': 'key_up', 'key': 'd'},
-                {'type': 'ultimate'},
-                {'type': 'attack', 'times': 16}
-            ]
-        )
+        # self.fight_at_location(
+        #     destination = "花焰群岛",
+        #     coordinates=[
+        #         (555, 500)
+        #     ],
+        #     movement_sequence=[
+        #         {'type': 'key_down', 'key': 'd'},
+        #         {'type': 'wait', 'duration': 6},
+        #         {'type': 'key_up', 'key': 'd'},
+        #         {'type': 'ultimate'},
+        #         {'type': 'attack', 'times': 16}
+        #     ]
+        # )
 
         # 示例点位2
         # self.fight_at_location(
+        #     destination = "花焰群岛",
         #     coordinates=[
-        #         (1740, 110),
-        #         (1560, 950),
-        #         (580, 730),
-        #         (1600, 1000)
+        #         (580, 730)
         #     ],
         #     movement_sequence=[
         #         {'type': 'key_down', 'key': 'd'},
@@ -103,42 +104,11 @@ class Fight:
         #     ]
         # )
 
-        # 绿野微风
-        # self.fight_at_location(
-        #     coordinates=[
-        #         (1740, 110),
-        #         (1500, 500),
-        #         (1515, 460),
-        #         (1600, 1000)
-        #     ],
-        #     movement_sequence=[
-        #         {'type': 'key_down', 'key': 's'},
-        #         {'type': 'key_down', 'key': 'd'},
-        #         {'type': 'wait', 'duration': 5},
-        #         {'type': 'press', 'key': 'space'},
-        #         {'type': 'wait', 'duration': 20},
-        #         {'type': 'key_up', 'key': 's'},
-        #         {'type': 'key_up', 'key': 'd'},
-        #         {'type': 'key_down', 'key': 'w'},
-        #         {'type': 'wait', 'duration': 4},
-        #         {'type': 'key_up', 'key': 'w'},
-        #         {'type': 'key_down', 'key': 's'},
-        #         {'type': 'key_down', 'key': 'd'},
-        #         {'type': 'wait', 'duration': 4},
-        #         {'type': 'key_up', 'key': 's'},
-        #         {'type': 'key_up', 'key': 'd'},
-        #         {'type': 'ultimate'},
-        #         {'type': 'attack', 'times': 20}
-        #     ]
-        # )
-        #
-        # # 小石头树田
+        # 小石树田
         self.fight_at_location(
+            destination="小石树田村",
             coordinates=[
-                (1740, 110),
-                (1600, 600),
-                (560, 200),
-                (1600, 1000)
+                (560, 200)
             ],
             movement_sequence=[
                 {'type': 'key_down', 'key': 'a'},

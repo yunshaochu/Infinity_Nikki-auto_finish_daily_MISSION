@@ -4,7 +4,7 @@ import time
 import pyautogui
 
 from Util.get_path import get_image_path, get_picture_path
-from Util.util import click_coordinate, press_keyboard, wait_image, activate_window_by_title
+from Util.util import click_coordinate, press_keyboard, wait_image, activate_window_by_title, to_main_menu
 from 微信ocr import wechat_ocr, OutputType
 
 
@@ -17,11 +17,11 @@ class DailyMissionRecognizer:
         self.task_queue = set()  # 任务队列，用于存储检测到的任务类型
         # 5个日常任务的坐标
         self.coordinates = [
-            (540, 650),
-            (760, 300),
-            (1140, 455),
-            (1500, 700),
-            (1700, 500)
+            (600, 640),
+            (800, 370),
+            (1080, 440),
+            (1350, 650),
+            (1600, 450)
         ]  
         self.screenshot_path = get_picture_path("mission")  # 截图保存路径
         os.makedirs(get_image_path(), exist_ok=True)  # 确保截图保存目录存在
@@ -42,27 +42,27 @@ class DailyMissionRecognizer:
                 continue
 
     def get_diamond(self):
-        press_keyboard('l')
-        wait_image('return')
+        self.open_daily_first()
         time.sleep(3)
         click_coordinate(1210,75)
         click_coordinate(1210,75)
         click_coordinate(1210,75)
-        press_keyboard('l')
+        # press_keyboard('l')
+        to_main_menu()
 
     def isFinish(self):
         """
         看看每日任务活跃度是否到达500
         """
-        press_keyboard('l')
-        wait_image('return')
-        time.sleep(1)
+        self.open_daily_first()
+        time.sleep(1.5)
         pyautogui.screenshot(
             self.screenshot_path,
             region=(985, 90, 1065 - 985, 130 - 90)  # 计算区域宽高
         )
         res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
-        press_keyboard('l')
+        # press_keyboard('l')
+        to_main_menu()
         if "500" in res_text:
             print("活跃度到达500")
             return True
@@ -119,17 +119,28 @@ class DailyMissionRecognizer:
         执行任务检测流程。
         """
         print("开始检测日常任务")
-        press_keyboard('l')
-        wait_image('return')
+        self.open_daily_first()
         self.process_coordinates()
-        press_keyboard('l')
+        # press_keyboard('l')
+        to_main_menu()
         print("检测到的任务类型:", self.task_queue)
         return self.task_queue
+
+
+    def open_daily_first(self):
+        """
+        打开日常任务1
+        :return:
+        """
+        press_keyboard('l')
+        wait_image('return')
+        click_coordinate(530, 400)
+        wait_image('return')
 
 
 if __name__ == "__main__":
     activate_window_by_title()
     recognizer = DailyMissionRecognizer()
-    # recognizer.run()
+    recognizer.run()
 
-    print(recognizer.isFinish())
+    # print(recognizer.isFinish())
