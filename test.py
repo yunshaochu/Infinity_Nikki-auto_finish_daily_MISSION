@@ -1,7 +1,10 @@
-import pyautogui
+from task.daily import DailyMissionRecognizer
 
-from Util.util import map_jump, click_coordinate
+recognizer = DailyMissionRecognizer()
 
-coordinates=[(555, 500)]
 
-map_jump(coordinates,destination="花焰群岛")
+
+
+
+# print(recognizer.isFinish())
+recognizer.get_diamond()

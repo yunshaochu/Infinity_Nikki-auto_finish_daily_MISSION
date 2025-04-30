@@ -37,11 +37,15 @@ class GameLauncher:
                 return
 
             time.sleep(5)
+            activate_window_by_title()
 
             wait_and_click_image("launch")
             if wait_image("update2",max_attempts=10):
                 wait_and_click_image("update2")
                 wait_and_click_image("launch",max_attempts=600)
+
+        time.sleep(10)
+        activate_window_by_title()
 
         start_time = time.time()
         count = 0
@@ -51,7 +55,10 @@ class GameLauncher:
                 activate_window_by_title()
             if wait_image("update", max_attempts=1):
                 wait_and_click_image("update")
-
+            if wait_image("yes3", max_attempts=1):
+                wait_and_click_image("yes3")
+            if wait_image("yes", max_attempts=1):
+                wait_and_click_image("yes")
             if is_main_menu():
                 break
             click_coordinate(900,900)

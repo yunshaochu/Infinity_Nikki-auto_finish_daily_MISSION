@@ -44,9 +44,9 @@ class DailyMissionRecognizer:
     def get_diamond(self):
         self.open_daily_first()
         time.sleep(3)
-        click_coordinate(1210,75)
-        click_coordinate(1210,75)
-        click_coordinate(1210,75)
+        click_coordinate(1800,675)
+        click_coordinate(1800,675)
+        click_coordinate(1800,675)
         # press_keyboard('l')
         to_main_menu()
 
@@ -58,7 +58,7 @@ class DailyMissionRecognizer:
         time.sleep(1.5)
         pyautogui.screenshot(
             self.screenshot_path,
-            region=(985, 90, 1065 - 985, 130 - 90)  # 计算区域宽高
+            region=(1750, 730, 1840 - 1750, 840 - 730)  # 计算区域宽高
         )
         res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
         # press_keyboard('l')
@@ -134,7 +134,9 @@ class DailyMissionRecognizer:
         """
         press_keyboard('l')
         wait_image('return')
+        time.sleep(1)
         click_coordinate(530, 400)
+        time.sleep(1)
         wait_image('return')
 
 

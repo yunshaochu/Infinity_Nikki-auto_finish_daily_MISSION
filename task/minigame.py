@@ -13,11 +13,8 @@ class Minigame:
         """
         # 依次点击的坐标列表
         self.coordinates = [
-            (1740, 110),
-            (1644, 720),
-            (630, 170),
-            (1400, 625),
-            (1600, 1000)
+            (630, 170), # 传送锚点位置
+            (1400, 625) # 二级菜单点击位置
         ]
 
 
@@ -26,8 +23,7 @@ class Minigame:
         """
         模拟走路到小游戏的具体位置。
         """
-        # activate_window_by_title()
-        map_jump(self.coordinates)
+        map_jump(coordinates=self.coordinates,destination="石树田无人区")
 
         pyautogui.keyDown('a')
         time.sleep(2.3)

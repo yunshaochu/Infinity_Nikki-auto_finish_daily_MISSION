@@ -62,7 +62,7 @@ def main():
         #     更新周本时间
         config["上次打周本的时间"] = datetime.now().strftime("%Y-%m-%d")
         with open("config.json", "w", encoding="utf-8") as f:
-            json.dump(config, f, ensure_ascii=False, indent=4)
+            json.dump(config, f,  ensure_ascii=False, indent=4)
     else:
         print("不可打周本")
 

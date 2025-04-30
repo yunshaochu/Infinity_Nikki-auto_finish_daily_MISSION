@@ -10,13 +10,10 @@ from 微信ocr import wechat_ocr, OutputType
 def map_jump(coordinates, destination="花焰群岛", screenshot_path="map"):
     """
     地图传送
-    :param coordinates: 列表，比如
+    :param coordinates: 点击的坐标的列表，一般是地图上传送锚点的坐标，比如minigame中：
     coordinates = [
-            (1740, 110),
-            (1644, 720),
-            (630, 170),
-            (1400, 625),
-            (1600, 1000)
+            (630, 170), # 传送锚点位置
+            (1400, 625) # 二级菜单点击位置
         ]
 
     :param max_retries: 最大重试次数
@@ -35,11 +32,9 @@ def map_jump(coordinates, destination="花焰群岛", screenshot_path="map"):
     click_coordinate(376, 1037)
     click_coordinate(60, 1040)
 
-    click_coordinate(1700, 100)
-    # 鼠标移动到（1555，555）
-    pyautogui.moveTo(1555, 555)
-    # 鼠标滚轮向下滑动1000
-    pyautogui.scroll(-1000)
+    click_coordinate(1700, 100) # 打开地图列表
+    pyautogui.moveTo(1555, 555) # 鼠标移动到方便滚轮滑动的位置
+    pyautogui.scroll(-1000)  # 鼠标滚轮向下滑动1000
 
     time.sleep(1)
 
