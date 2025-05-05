@@ -234,7 +234,7 @@ def is_main_menu():
     press_keyboard("esc")
 
     # 再次查找“shine”图像
-    if wait_image("shine", max_attempts=2):
+    if wait_image("shine", max_attempts=4):
         press_keyboard("esc")
         return True
 

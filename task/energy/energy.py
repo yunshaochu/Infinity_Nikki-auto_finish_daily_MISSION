@@ -1,20 +1,14 @@
-import time
-
-import pyautogui
-
-from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, to_main_menu, \
-    wait_main_menu
+from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, to_main_menu, wait_main_menu, \
+    map_jump
 from task.energy.blessing_glory import BlessingGlory
 from task.energy.monster_trial import MonsterTrialAutomation
 
 class EnergyTask:
     def __init__(self):
+        # 依次点击的坐标列表
         self.coordinates = [
-            (1740, 110),
-            (1644, 720),
-            (630, 170),
-            (1400, 625),
-            (1600, 1000)
+            (630, 170), # 传送锚点位置
+            (1400, 625) # 二级菜单点击位置
         ]
 
 
@@ -25,6 +19,7 @@ class EnergyTask:
         打开体力副本
         :return:
         """
+        map_jump(coordinates=self.coordinates,destination="石树田无人区")
         press_keyboard('l')
         wait_image('return')
         click_coordinate(1200, 250)
