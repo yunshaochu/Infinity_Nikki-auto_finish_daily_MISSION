@@ -1,5 +1,5 @@
 import json
-from Util.util import close_game_window
+from Util.util import close_game_window, map_jump
 from task.daily import DailyMissionRecognizer
 from task.dig import DiggingTask
 from task.energy.energy import EnergyTask
@@ -45,6 +45,12 @@ def main():
 
     # 启动游戏
     GameLauncher().launch_game(config["游戏启动路径"])
+
+    map_jump(coordinates=[
+            (630, 170), # 传送锚点位置
+            (1400, 625) # 二级菜单点击位置
+        ], destination="石树田无人区")
+
     # 获取每日任务
     recognizer = DailyMissionRecognizer()
     daily = recognizer.run()
@@ -138,9 +144,9 @@ def main():
         # 检查是否完成每日活跃度
         if recognizer.isFinish():
             break
-    if num == "one":
-        choose = config["每日体力"]
-        energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
+    # if num == "one":
+    choose = config["每日体力"]
+    energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
                              choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
     recognizer.get_diamond()
     SeasonPassTask().execute()
