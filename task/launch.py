@@ -5,7 +5,8 @@ import time
 import pygetwindow as gw
 
 from Util.get_path import get_picture_path
-from Util.util import wait_and_click_image, click_coordinate, is_main_menu, activate_window_by_title, wait_image
+from Util.util import wait_and_click_image, click_coordinate, is_main_menu, activate_window_by_title, wait_image, \
+    wait_images
 
 
 class GameLauncher:
@@ -53,12 +54,20 @@ class GameLauncher:
             count += 1
             if count % 4 == 0:
                 activate_window_by_title()
-            if wait_image("update", max_attempts=1):
-                wait_and_click_image("update")
-            if wait_image("yes3", max_attempts=1):
-                wait_and_click_image("yes3")
-            if wait_image("yes", max_attempts=1):
-                wait_and_click_image("yes")
+            # if wait_image("update", max_attempts=1):
+            #     wait_and_click_image("update")
+            # if wait_image("yes3", max_attempts=1):
+            #     wait_and_click_image("yes3")
+            # if wait_image("yes", max_attempts=1):
+            #     wait_and_click_image("yes")
+            # if wait_image("launch", max_attempts=1):
+            #     wait_and_click_image("launch")
+            # if wait_image("update2", max_attempts=1):
+            #     wait_and_click_image("update2")
+            found_image = wait_images(["update", "yes3", "yes", "launch", "update2"], max_attempts=1)
+            if found_image:
+                wait_and_click_image(found_image)
+
             if is_main_menu():
                 break
             click_coordinate(900,900)

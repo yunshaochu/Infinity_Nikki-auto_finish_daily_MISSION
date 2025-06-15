@@ -129,10 +129,10 @@ def main():
 
         elif name == "活跃能量":
             # 如果num是one，说明每日体力还没清；如果是max，说明体力在前三个任务清理完毕了
-            if num == "one":
-                num = "max"
-                choose = config["每日体力"]
-                energyTask.daily_run(choose,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
+            # if num == "one":
+            #     num = "max"
+            choose = config["每日体力"]
+            energyTask.daily_run(choose,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
         elif name == "提升祝福闪光等级":
             ShineLevelUpTask().execute()
@@ -146,8 +146,19 @@ def main():
             break
     # if num == "one":
     choose = config["每日体力"]
+
+    # energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
+    #                          choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
+    # energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
+    #                          choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
+
+    # 修改为：固定先消耗flower，再消耗fish。
     energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
-                             choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
+                             choice_consumable="fish")
+    energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
+                             choice_consumable="flower")
+
+    recognizer.get_diamond()
     recognizer.get_diamond()
     SeasonPassTask().execute()
 

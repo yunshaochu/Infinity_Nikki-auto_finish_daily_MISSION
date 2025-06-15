@@ -143,6 +143,6 @@ class DailyMissionRecognizer:
 if __name__ == "__main__":
     activate_window_by_title()
     recognizer = DailyMissionRecognizer()
-    recognizer.run()
+    recognizer.get_diamond()
 
     # print(recognizer.isFinish())

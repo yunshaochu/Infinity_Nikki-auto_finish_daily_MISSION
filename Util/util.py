@@ -130,6 +130,42 @@ def wait_image(image_path, wait_interval=0.5, max_attempts=100):
         result = False
     return result
 
+def wait_images(image_paths, wait_interval=0.5, max_attempts=100):
+    """
+    在屏幕上查找多张图片并返回第一张找到的图片路径，同时确保指定窗口已激活。
+    :param image_paths: 图片路径列表
+    :param wait_interval: 等待间隔时间
+    :param max_attempts: 最大尝试次数
+    :return: 找到的图片路径，如果没有找到则返回 None
+    """
+    if isinstance(image_paths, str):
+        image_paths = [image_paths]
+
+    print(f"正在寻找图片: {image_paths}")
+    time.sleep(wait_interval)
+    attempts = 0
+
+    while attempts < max_attempts:
+        for image_path in image_paths:
+            image_path_temp = get_picture_path(image_path)
+            try:
+                location = pyautogui.locateOnScreen(image_path_temp, confidence=0.8)
+                if location is not None:
+                    print(f"找到图片: {image_path}")
+                    return image_path  # 返回找到的第一个图片路径
+            except Exception as e:
+                print(f"发生未知错误: {e}")
+                continue
+
+        print("未找到任何图片，继续检测...")
+        time.sleep(wait_interval)
+        attempts += 1
+
+    print(f"达到最大尝试次数 {max_attempts}，仍未找到任何图片")
+    return None
+
+
+
 def wait_and_click_image(image_path, wait_interval=1, max_attempts=15, press_time=0.1):
     """
     在屏幕上查找图片并点击，同时确保指定窗口已激活。
