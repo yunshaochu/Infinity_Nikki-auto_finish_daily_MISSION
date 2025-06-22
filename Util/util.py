@@ -269,9 +269,15 @@ def is_main_menu():
     # 如果未找到“daMiao”，尝试按下“esc”键
     press_keyboard("esc")
 
+    if wait_image("daMiao", max_attempts=1):
+        return True
+
     # 再次查找“shine”图像
     if wait_image("shine", max_attempts=4):
         press_keyboard("esc")
+        click_coordinate(70, 55)
+        click_coordinate(70, 55)
+        click_coordinate(70, 55)
         return True
 
     return False
