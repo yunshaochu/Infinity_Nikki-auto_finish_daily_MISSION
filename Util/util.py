@@ -74,21 +74,40 @@ def map_jump(coordinates, destination="花焰群岛", screenshot_path="map"):
 
 def activate_window_by_title(window_title="无限暖暖"):
     """
-    根据窗口标题激活窗口。
-    :param window_title: 窗口标题
-    """
+        根据窗口标题激活窗口
+        :param window_title: 窗口标题
+        """
     try:
-        # 查找窗口
-        window = gw.getWindowsWithTitle(window_title)
-        if window:
-            # 激活找到的第一个窗口
-            target_window = window[0]
-            if not target_window.isActive:
-                target_window.activate()
-                print(f"成功激活窗口: {window_title}")
+        window_list = gw.getWindowsWithTitle(window_title)
+
+        if window_list:
+            target_window = window_list[0]
+
+
+            # 1. 如果窗口已最小化，先恢复它
+            if target_window.isMinimized:
+                target_window.restore()
+                time.sleep(0.1)  # 等待窗口恢复
+
+            # 2. 最小化窗口，打破当前的焦点状态
+            target_window.minimize()
+            time.sleep(0.1)  # 等待窗口最小化
+
+            # 3. 恢复窗口，把它带到Z序（堆叠顺序）的顶层
+            target_window.restore()
+            time.sleep(0.1)  # 等待窗口恢复
+
+            # 4. 最后再激活，获得键盘焦点
+            target_window.activate()
+
+            print(f"成功强制激活窗口: {window_title}")
+
         else:
             print(f"未找到标题为 '{window_title}' 的窗口。")
+
     except Exception as e:
+        # 这里特别要注意，如果目标窗口是以管理员权限运行的，
+        # 而你的脚本不是，可能会抛出权限错误
         print(f"激活窗口时发生错误: {e}")
 
 
@@ -154,7 +173,7 @@ def wait_images(image_paths, wait_interval=0.5, max_attempts=100):
                     print(f"找到图片: {image_path}")
                     return image_path  # 返回找到的第一个图片路径
             except Exception as e:
-                print(f"发生未知错误: {e}")
+                # print(f"未找到图片: {e}")
                 continue
 
         print("未找到任何图片，继续检测...")

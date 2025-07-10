@@ -70,7 +70,7 @@ class GameLauncher:
 
             if is_main_menu():
                 break
-            click_coordinate(900,900)
+            click_coordinate(900,800)
             time.sleep(0.1)
 
             # 检查是否超时
