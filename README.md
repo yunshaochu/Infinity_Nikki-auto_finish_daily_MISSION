@@ -1,4 +1,4 @@
-
+python: 3.12
 
 # Infinity_Nikki-auto_finish_daily_MISSION
 
