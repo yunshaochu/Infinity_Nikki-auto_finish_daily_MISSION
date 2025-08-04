@@ -75,34 +75,34 @@ class Fight:
         :return:
         """
         # 示例点位1
-        # self.fight_at_location(
-        #     destination = "花焰群岛",
-        #     coordinates=[
-        #         (555, 500)
-        #     ],
-        #     movement_sequence=[
-        #         {'type': 'key_down', 'key': 'd'},
-        #         {'type': 'wait', 'duration': 6},
-        #         {'type': 'key_up', 'key': 'd'},
-        #         {'type': 'ultimate'},
-        #         {'type': 'attack', 'times': 16}
-        #     ]
-        # )
+        self.fight_at_location(
+            destination = "花焰群岛",
+            coordinates=[
+                (555, 500)
+            ],
+            movement_sequence=[
+                {'type': 'key_down', 'key': 'd'},
+                {'type': 'wait', 'duration': 6},
+                {'type': 'key_up', 'key': 'd'},
+                {'type': 'ultimate'},
+                {'type': 'attack', 'times': 16}
+            ]
+        )
 
         # 示例点位2
-        # self.fight_at_location(
-        #     destination = "花焰群岛",
-        #     coordinates=[
-        #         (580, 730)
-        #     ],
-        #     movement_sequence=[
-        #         {'type': 'key_down', 'key': 'd'},
-        #         {'type': 'wait', 'duration': 17},
-        #         {'type': 'key_up', 'key': 'd'},
-        #         {'type': 'ultimate'},
-        #         {'type': 'attack', 'times': 16}
-        #     ]
-        # )
+        self.fight_at_location(
+            destination = "花焰群岛",
+            coordinates=[
+                (580, 730)
+            ],
+            movement_sequence=[
+                {'type': 'key_down', 'key': 'd'},
+                {'type': 'wait', 'duration': 17},
+                {'type': 'key_up', 'key': 'd'},
+                {'type': 'ultimate'},
+                {'type': 'attack', 'times': 16}
+            ]
+        )
 
         # 小石树田
         self.fight_at_location(

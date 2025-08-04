@@ -14,7 +14,10 @@ class ShopTask:
         # time.sleep(3)
         wait_and_click_image("weekShop")
         pyautogui.moveTo(1000, 500)
+        time.sleep(1)
         pyautogui.scroll(-10000)
+        pyautogui.scroll(-10000)
+
         if  wait_image("freeShop1", max_attempts=5):
             wait_and_click_image("freeShop1")
             wait_and_click_image("yes")
@@ -22,6 +25,8 @@ class ShopTask:
             click_coordinate(950,40)
             click_coordinate(950,40)
 
+        pyautogui.moveTo(1000, 500)
+        # pyautogui.scroll(800)
 
         if  wait_image("freeShop2", max_attempts=5):
             wait_and_click_image("freeShop2")

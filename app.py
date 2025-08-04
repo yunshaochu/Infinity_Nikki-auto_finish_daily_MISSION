@@ -1,5 +1,5 @@
 import json
-from Util.util import close_game_window, map_jump
+from Util.util import close_game_window, map_jump, activate_window_by_title
 from task.daily import DailyMissionRecognizer
 from task.dig import DiggingTask
 from task.energy.energy import EnergyTask
@@ -76,6 +76,7 @@ def main():
 
 
     for task in task_list:
+        activate_window_by_title()
         name = task["name"]
         if not task.get("enabled", True):
             continue
@@ -153,10 +154,13 @@ def main():
     #                          choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
     # 修改为：固定先消耗flower，再消耗fish。
+
     energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
-                             choice_consumable="fish")
+                             choice_consumable="fish2")
     energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
                              choice_consumable="flower")
+    energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
+                             choice_consumable="fish")
 
     recognizer.get_diamond()
     recognizer.get_diamond()
