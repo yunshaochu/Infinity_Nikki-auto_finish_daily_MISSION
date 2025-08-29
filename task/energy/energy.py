@@ -1,5 +1,5 @@
 from Util.util import press_keyboard, wait_image, click_coordinate, wait_and_click_image, to_main_menu, wait_main_menu, \
-    map_jump
+    map_jump, activate_window_by_title
 from task.energy.blessing_glory import BlessingGlory
 from task.energy.monster_trial import MonsterTrialAutomation
 
@@ -21,7 +21,14 @@ class EnergyTask:
         """
         map_jump(coordinates=self.coordinates,destination="石树田无人区")
         press_keyboard('l')
-        wait_image('return')
+        
+        # 等待"幻境挑战"图片出现，如果没出现则重试，最多5次
+        if not wait_image('challenge', max_attempts=10):
+            if attempts < 4:  # 最多尝试5次（0-4）
+                return self.open_energy(attempts + 1)
+            else:
+                raise Exception("无法找到'challenge'，已尝试5次")
+        
         click_coordinate(1200, 250)
         wait_image('return')
 
@@ -82,7 +89,7 @@ class EnergyTask:
         click_coordinate(1350, 335) # 保险措施，如果此时体力不够/周本次数耗尽，要点击这里关闭页面
         to_main_menu()
 
-    def daily_run(self, choose, choice_material="bubble", choice_consumable="flower"):
+    def daily_run(self, choose, choice_material="bubble", choice_consumable="fish"):
         if choose == "素材激化幻境":
            self.enter_material_activation(num="all",choice_material=choice_material, choice_consumable=choice_consumable)
         elif choose == "魔物试炼幻境":
@@ -94,4 +101,5 @@ class EnergyTask:
 
 if __name__ == "__main__":
     task = EnergyTask()
+    activate_window_by_title()
     task.daily_run("素材激化幻境")
