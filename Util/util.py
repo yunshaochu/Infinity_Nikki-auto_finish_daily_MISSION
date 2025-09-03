@@ -34,12 +34,9 @@ def map_jump(coordinates, destination="花焰群岛", screenshot_path="map"):
 
     click_coordinate(1700, 100) # 打开地图列表
 
-    # 打开心愿原野
-    map_jump_chose_position("心愿原野", screenshot_path)
 
 
-    pyautogui.moveTo(1555, 555) # 鼠标移动到方便滚轮滑动的位置
-    pyautogui.scroll(-1000)  # 鼠标滚轮向下滑动1000
+
 
     time.sleep(1)
 
@@ -66,14 +63,25 @@ def map_jump_chose_position(destination, screenshot_path):
     """
     screenshot_path = get_picture_path(screenshot_path)
     region = (1300, 100, 1850 - 1300, 1000 - 100)  # 截图区域，氛围是将要跳转的地图名称列表
+
+    # 首先，看看不滚到最底下，能不能直接找到目的地
     target_pos = capture_and_analyze_mission_detail(region, screenshot_path, destination)
+
+    # 其次，滚到最底下，看看不点击“心愿原野”能不能找到目的地（如果在主世界和星海，这一步就结束了）
     if not target_pos:
-        click_coordinate(1600, 300)
-        time.sleep(1)
         # 鼠标移动到（1555，555）
         pyautogui.moveTo(1555, 555)
         # 鼠标滚轮向下滑动1000
-        pyautogui.scroll(-1000)
+        pyautogui.scroll(-10000)
+        target_pos = capture_and_analyze_mission_detail(region, screenshot_path, destination)
+
+    # 还是不行的话，最后点击“心愿原野”，再找目的地
+    if not target_pos:
+        map_jump_chose_position("心愿原野", screenshot_path)
+        # 鼠标移动到（1555，555）
+        pyautogui.moveTo(1555, 555)
+        # 鼠标滚轮向下滑动1000
+        pyautogui.scroll(-10000)
         target_pos = capture_and_analyze_mission_detail(region, screenshot_path, destination)
     # 把坐标转为相对于屏幕左上角的坐标，1300 100是截图的图片左上角顶点
     target_pos = list(target_pos)

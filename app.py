@@ -12,6 +12,7 @@ from task.shine_levelup import ShineLevelUpTask
 from datetime import datetime
 
 from task.shop import ShopTask
+from task.starSea import StarSeaTask
 
 
 def load_task_config(path="config.json"):
@@ -173,6 +174,8 @@ def main():
     recognizer.get_diamond()
     SeasonPassTask().execute()
     recognizer.get_diamond()
+
+    StarSeaTask().execute()
 
 
 if __name__ == "__main__":
