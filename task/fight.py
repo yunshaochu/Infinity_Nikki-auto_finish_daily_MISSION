@@ -30,7 +30,6 @@ class Fight:
                 if not result:
                     wait_and_click_image('revive')
                     wait_image('daMiao')
-
             elif act == 'ultimate':
                 self._release_ultimate()
 
