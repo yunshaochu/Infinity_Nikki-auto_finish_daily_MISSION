@@ -17,26 +17,42 @@ class Minigame:
             (1400, 625) # 二级菜单点击位置
         ]
 
-
-
     def walk_to_minigame(self):
         """
         模拟走路到小游戏的具体位置。
         """
-        map_jump(coordinates=self.coordinates,destination="石树田无人区")
+        max_attempts = 3  # 最大尝试次数
+        attempts = 0
+        
+        while attempts < max_attempts:
+            attempts += 1
+            print(f"尝试第 {attempts} 次执行小游戏流程")
+            
+            map_jump(coordinates=self.coordinates, destination="石树田无人区")
 
-        pyautogui.keyDown('a')
-        time.sleep(2.3)
-        press_keyboard('space')
-        time.sleep(0.1)
-        press_keyboard('space')
-        time.sleep(11)
-        pyautogui.keyUp('a')
-        time.sleep(1)
-        press_keyboard('s', duration=1)
-        press_keyboard('a', duration=2)
-        press_keyboard('s', duration=2)
-        self.start_minigame()
+            pyautogui.keyDown('a')
+            time.sleep(2.3)
+            press_keyboard('space')
+            time.sleep(0.1)
+            press_keyboard('space')
+            time.sleep(11)
+            pyautogui.keyUp('a')
+            time.sleep(1)
+            press_keyboard('s', duration=1)
+            press_keyboard('a', duration=2)
+            press_keyboard('s', duration=2)
+            
+            # 调用start_minigame并检查返回值
+            result = self.start_minigame()
+            if result:  # 如果成功执行则退出循环
+                print("小游戏流程执行成功")
+                break
+            else:
+                print(f"第 {attempts} 次尝试失败")
+                if attempts >= max_attempts:
+                    print("已达到最大尝试次数，结束小游戏流程")
+        else:
+            print("小游戏流程执行失败，已达到最大尝试次数")
 
     def start_minigame(self):
         """
@@ -46,7 +62,10 @@ class Minigame:
         press_keyboard('f')  # 按下 f 键
         time.sleep(1)  
 
-
+        # 检查是否出现dialog图片，如果没有则直接结束方法
+        if not wait_image("dialog", max_attempts=3):
+            print("未检测到dialog图片，结束小游戏方法并重新开始")
+            return False
 
         # 不停点击（1420, 700），直到图片 dialog 消失
         while True:
@@ -89,6 +108,8 @@ class Minigame:
             click_coordinate(1446, 760)
             print("点击坐标（1446, 760)")
             time.sleep(0.5)
+        
+        return True  # 成功执行
 
 
 # 实例化并运行小游戏定位

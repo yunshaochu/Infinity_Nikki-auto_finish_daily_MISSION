@@ -218,6 +218,11 @@ class StarSeaTask:
         click_coordinate(800, 970)
         time.sleep(2)
         click_coordinate(1240, 500)
+
+        # 退出到主页面
+        click_coordinate(1310,350)
+        click_coordinate(1310,350)
+        click_coordinate(1310,350)
         to_main_menu()
 
     def ring(self):
@@ -233,6 +238,7 @@ class StarSeaTask:
         self.ring()
         self.light()
         self.post_card()
+        StarSeaDaily().get_diamond()
 
 
 if __name__ == '__main__':
