@@ -6,6 +6,7 @@ import pyautogui
 from Util.get_path import get_image_path, get_picture_path
 from Util.util import activate_window_by_title, press_keyboard, map_jump, click_coordinate, to_main_menu, is_main_menu, \
     wait_and_click_image, wait_image
+from task.photo import PhotoTask
 from 微信ocr import wechat_ocr, OutputType
 
 
@@ -174,8 +175,11 @@ class StarSeaTask:
 
 
 
-
-    def light(self):
+    def photo_star_book(self):
+        """
+        星图绘册拍照，好像能顺便light（）
+        :return:
+        """
         map_jump(coordinates=self.mian_island, destination="星海")
         movement_sequence = [
             {'type': 'key_down', 'key': 'w'},
@@ -202,8 +206,47 @@ class StarSeaTask:
             {'type': 'wait', 'duration': 4},
             {'type': 'key_up', 'key': 'a'},
 
+
+            {'type': 'key_down', 'key': 'w'},
+            {'type': 'wait', 'duration': 2.5},
+            {'type': 'key_up', 'key': 'w'},
+
+
         ]
         self._walk(movement_sequence)
+
+        PhotoTask().get_photo()
+
+    # light的功能好像被photo_star_book包括了，所以这个功能被注释掉
+    # def light(self):
+    #     map_jump(coordinates=self.mian_island, destination="星海")
+    #     movement_sequence = [
+    #         {'type': 'key_down', 'key': 'w'},
+    #         {'type': 'key_down', 'key': 'd'},
+    #         {'type': 'wait', 'duration': 10},
+    #         {'type': 'key_up', 'key': 'd'},
+    #         {'type': 'key_up', 'key': 'w'},
+    #
+    #
+    #
+    #         {'type': 'key_down', 'key': 'w'},
+    #         {'type': 'wait', 'duration': 0.2},
+    #         {'type': 'press', 'key': 'space'},
+    #         {'type': 'wait', 'duration': 6},
+    #         {'type': 'key_up', 'key': 'w'},
+    #
+    #
+    #         {'type': 'key_down', 'key': 'a'},
+    #         {'type': 'key_down', 'key': 'space'},
+    #         {'type': 'wait', 'duration': 1},
+    #         {'type': 'key_up', 'key': 'space'},
+    #         {'type': 'wait', 'duration': 4},
+    #         {'type': 'press', 'key': 'space'},
+    #         {'type': 'wait', 'duration': 4},
+    #         {'type': 'key_up', 'key': 'a'},
+    #
+    #     ]
+    #     self._walk(movement_sequence)
 
 
     def share(self):
@@ -236,7 +279,7 @@ class StarSeaTask:
         activate_window_by_title("无限暖暖")
         self.share()
         self.ring()
-        self.light()
+        self.photo_star_book()
         self.post_card()
         StarSeaDaily().get_diamond()
 
@@ -244,5 +287,5 @@ class StarSeaTask:
 if __name__ == '__main__':
     activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    task.execute()
-    # task.post_card()
+    # task.execute()
+    task.photo_star_book()

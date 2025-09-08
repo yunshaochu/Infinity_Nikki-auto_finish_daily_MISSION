@@ -13,6 +13,11 @@ class PhotoTask:
         press_keyboard('p')
         wait_image('return')
         click_coordinate(1800, 550)
+
+        if wait_image('delete'):
+            wait_and_click_image('delete')
+            wait_and_click_image('yes4')
+
         to_main_menu()
 
 if __name__ == "__main__":
