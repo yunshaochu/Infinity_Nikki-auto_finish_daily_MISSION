@@ -4,10 +4,12 @@ import time
 import pyautogui
 
 from Util.get_path import get_image_path, get_picture_path
-from Util.util import activate_window_by_title, press_keyboard, map_jump, click_coordinate, to_main_menu, is_main_menu, \
-    wait_and_click_image, wait_image
+from Util import NikkiUtil
 from task.photo import PhotoTask
 from 微信ocr import wechat_ocr, OutputType
+
+# 初始化工具类实例
+util = NikkiUtil()
 
 
 class StarSeaDaily:
@@ -37,7 +39,7 @@ class StarSeaDaily:
         time.sleep(1)
         for x, y in self.coordinates:
             try:
-                click_coordinate(x, y)
+                util.click_coordinate(x, y)
                 self.capture_and_analyze_mission_detail()
             except Exception as e:
                 print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
@@ -46,11 +48,11 @@ class StarSeaDaily:
     def get_diamond(self):
         self.open_daily_first()
         time.sleep(3)
-        click_coordinate(1800,675)
-        click_coordinate(1800,675)
-        click_coordinate(1800,675)
-        # press_keyboard('l')
-        to_main_menu()
+        util.click_coordinate(1800,675)
+        util.click_coordinate(1800,675)
+        util.click_coordinate(1800,675)
+        # util.press_keyboard('l')
+        util.to_main_menu()
 
 
 
@@ -76,7 +78,7 @@ class StarSeaDaily:
             for keyword in keywords:
                 if keyword in text_line:
                     if keyword == "祝福闪光":
-                        # 检查是否同时包含“等级”或“幻境”
+                        # 检查是否同时包含"等级"或"幻境"
                         if "等级" in text_line:
                             self.task_queue.add("提升祝福闪光等级")
                         elif "幻境" in text_line:
@@ -97,8 +99,8 @@ class StarSeaDaily:
         print("开始检测日常任务")
         self.open_daily_first()
         self.process_coordinates()
-        # press_keyboard('l')
-        to_main_menu()
+        # util.press_keyboard('l')
+        util.to_main_menu()
         print("检测到的任务类型:", self.task_queue)
         return self.task_queue
 
@@ -108,13 +110,12 @@ class StarSeaDaily:
         打开日常任务1
         :return:
         """
-        press_keyboard('l')
-        wait_image('return')
+        util.press_keyboard('l')
+        util.wait_image('return')
         time.sleep(1)
-        click_coordinate(550, 750)
+        util.click_coordinate(550, 750)
         time.sleep(1)
-        wait_image('return')
-
+        util.wait_image('return')
 
 
 
@@ -141,7 +142,7 @@ class StarSeaTask:
             elif act == 'key_up':
                 pyautogui.keyUp(action['key'])
             elif act == 'press':
-                press_keyboard(action['key'])
+                util.press_keyboard(action['key'])
             elif act == 'wait':
                 time.sleep(action['duration'])
 
@@ -151,7 +152,7 @@ class StarSeaTask:
         投递心愿信笺
         :return:
         """
-        map_jump(coordinates=self.beach, destination="星海")
+        util.map_jump(coordinates=self.beach, destination="星海")
         movement_sequence = [
 
 
@@ -169,9 +170,9 @@ class StarSeaTask:
         ]
         self._walk(movement_sequence)
 
-        press_keyboard('F')
-        wait_and_click_image('yes_post')
-        wait_and_click_image("yes4")
+        util.press_keyboard('F')
+        util.wait_and_click_image('yes_post')
+        util.wait_and_click_image("yes4")
 
 
 
@@ -180,7 +181,7 @@ class StarSeaTask:
         星图绘册拍照，好像能顺便light（）
         :return:
         """
-        map_jump(coordinates=self.mian_island, destination="星海")
+        util.map_jump(coordinates=self.mian_island, destination="星海")
         movement_sequence = [
             {'type': 'key_down', 'key': 'w'},
             {'type': 'key_down', 'key': 'd'},
@@ -219,7 +220,7 @@ class StarSeaTask:
 
     # light的功能好像被photo_star_book包括了，所以这个功能被注释掉
     # def light(self):
-    #     map_jump(coordinates=self.mian_island, destination="星海")
+    #     util.map_jump(coordinates=self.mian_island, destination="星海")
     #     movement_sequence = [
     #         {'type': 'key_down', 'key': 'w'},
     #         {'type': 'key_down', 'key': 'd'},
@@ -251,32 +252,32 @@ class StarSeaTask:
 
     def share(self):
         # 懒得截图了，直接模拟点击
-        to_main_menu()
-        press_keyboard("C")
+        util.to_main_menu()
+        util.press_keyboard("C")
         time.sleep(2)
-        click_coordinate(45, 700)
+        util.click_coordinate(45, 700)
         time.sleep(2)
-        click_coordinate(50, 600)
+        util.click_coordinate(50, 600)
         time.sleep(2)
-        click_coordinate(800, 970)
+        util.click_coordinate(800, 970)
         time.sleep(2)
-        click_coordinate(1240, 500)
+        util.click_coordinate(1240, 500)
 
         # 退出到主页面
-        click_coordinate(1310,350)
-        click_coordinate(1310,350)
-        click_coordinate(1310,350)
-        to_main_menu()
+        util.click_coordinate(1310,350)
+        util.click_coordinate(1310,350)
+        util.click_coordinate(1310,350)
+        util.to_main_menu()
 
     def ring(self):
-        to_main_menu()
-        map_jump(coordinates=self.mian_island, destination="星海")
+        util.to_main_menu()
+        util.map_jump(coordinates=self.mian_island, destination="星海")
         # 长按E键
-        press_keyboard("E", duration=5)
-        to_main_menu()
+        util.press_keyboard("E", duration=5)
+        util.to_main_menu()
 
     def execute(self):
-        activate_window_by_title("无限暖暖")
+        util.activate_window_by_title("无限暖暖")
         self.share()
         self.ring()
         self.photo_star_book()
@@ -285,7 +286,7 @@ class StarSeaTask:
 
 
 if __name__ == '__main__':
-    activate_window_by_title("无限暖暖")
+    util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
     # task.execute()
     task.photo_star_book()

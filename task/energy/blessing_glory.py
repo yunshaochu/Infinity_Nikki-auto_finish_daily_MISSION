@@ -2,8 +2,11 @@ import time
 import pyautogui
 import json
 from Util.get_path import get_picture_path, get_config_path
-from Util.util import activate_window_by_title, click_coordinate, wait_and_click_image
+from Util import NikkiUtil
 from 微信ocr import wechat_ocr
+
+# 初始化工具类实例
+util = NikkiUtil()
 
 # 祝福闪光幻境
 class BlessingGlory:
@@ -27,8 +30,6 @@ class BlessingGlory:
                 return pos['x'] + 100, pos['y'] + 160  # 直接返回调整后的坐标
         return None
 
-
-
     def _process_ocr(self):
         """处理OCR识别流程"""
         image_path = get_picture_path("祝福闪光幻境")
@@ -43,11 +44,11 @@ class BlessingGlory:
             return
 
         print(f"目标 '{self.target}' 的坐标为: x={target_pos[0]}, y={target_pos[1]}")
-        click_coordinate(*target_pos)
-        wait_and_click_image("quickChallenge")
+        util.click_coordinate(*target_pos)
+        util.wait_and_click_image("quickChallenge")
         if num == "all":
-            wait_and_click_image("max")
-        wait_and_click_image("useEnergy")
+            util.wait_and_click_image("max")
+        util.wait_and_click_image("useEnergy")
 
     def run(self,num):
         """执行完整自动化流程"""
@@ -56,6 +57,6 @@ class BlessingGlory:
 
 
 if __name__ == "__main__":
-    activate_window_by_title()
+    util.activate_window_by_title()
     automation = BlessingGlory()
     automation.run("all")

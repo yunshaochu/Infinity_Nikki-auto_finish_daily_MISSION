@@ -1,6 +1,9 @@
 import time
 import pyautogui
-from Util.util import press_keyboard, activate_window_by_title, map_jump, wait_image, wait_and_click_image, is_main_menu
+from Util import NikkiUtil
+
+# 初始化工具类实例
+util = NikkiUtil()
 
 
 class Fight:
@@ -19,17 +22,17 @@ class Fight:
             elif act == 'key_up':
                 pyautogui.keyUp(action['key'])
             elif act == 'press':
-                press_keyboard(action['key'])
+                util.press_keyboard(action['key'])
             elif act == 'wait':
                 time.sleep(action['duration'])
             elif act == 'attack':
                 self._attack_sequence(action.get('times', 16))
-                # result = wait_image('daMiao',max_attempts=10)
-                result = is_main_menu()
+                # result = util.wait_image('daMiao',max_attempts=10)
+                result = util.is_main_menu()
                 # 如果没出现"daMiao"说明死了，点一下复活
                 if not result:
-                    wait_and_click_image('revive')
-                    wait_image('daMiao')
+                    util.wait_and_click_image('revive')
+                    util.wait_image('daMiao')
             elif act == 'ultimate':
                 self._release_ultimate()
 
@@ -48,7 +51,7 @@ class Fight:
         pyautogui.keyUp('q')
 
         # 如果开启了大招动画，开大后一瞬间是没有daMiao的，如何有说明开大失败了，再开一次
-        # if not wait_image('daMiao', max_attempts=1):
+        # if not util.wait_image('daMiao', max_attempts=1):
         #     pyautogui.keyDown('q')
         #     pyautogui.mouseDown(button='left')
         #     time.sleep(0.1)
@@ -63,7 +66,7 @@ class Fight:
             time.sleep(1)
 
     def fight_at_location(self, coordinates, destination, movement_sequence):
-        map_jump(coordinates=coordinates,destination=destination)
+        util.map_jump(coordinates=coordinates,destination=destination)
         print("开始寻路")
         self._walk_to_fight(movement_sequence)
 
@@ -122,6 +125,6 @@ class Fight:
 
 
 if __name__ == "__main__":
-    activate_window_by_title()
+    util.activate_window_by_title()
     fight = Fight()
     fight.run()

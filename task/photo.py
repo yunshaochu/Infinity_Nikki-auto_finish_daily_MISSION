@@ -1,7 +1,9 @@
 import time
 
-from Util.util import press_keyboard, click_coordinate, wait_and_click_image, wait_image, to_main_menu, \
-    activate_window_by_title
+from Util import NikkiUtil
+
+# 初始化工具类实例
+util = NikkiUtil()
 
 
 class PhotoTask:
@@ -9,16 +11,16 @@ class PhotoTask:
         pass
 
     def get_photo(self):
-        activate_window_by_title()
-        press_keyboard('p')
-        wait_image('return')
-        click_coordinate(1800, 550)
+        util.activate_window_by_title()
+        util.press_keyboard('p')
+        util.wait_image('return')
+        util.click_coordinate(1800, 550)
 
-        if wait_image('delete'):
-            wait_and_click_image('delete')
-            wait_and_click_image('yes4')
+        if util.wait_image('delete'):
+            util.wait_and_click_image('delete')
+            util.wait_and_click_image('yes4')
 
-        to_main_menu()
+        util.to_main_menu()
 
 if __name__ == "__main__":
 

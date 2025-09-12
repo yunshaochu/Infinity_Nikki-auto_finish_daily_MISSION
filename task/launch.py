@@ -5,8 +5,10 @@ import time
 import pygetwindow as gw
 
 from Util.get_path import get_picture_path
-from Util.util import wait_and_click_image, click_coordinate, is_main_menu, activate_window_by_title, wait_image, \
-    wait_images
+from Util import NikkiUtil
+
+# 初始化工具类实例
+util = NikkiUtil()
 
 
 class GameLauncher:
@@ -23,8 +25,8 @@ class GameLauncher:
         print("开始启动游戏")
         if exe_path == '':
             exe_path = self.exe_path
-        # activate_window_by_title()
-        if not is_main_menu():
+        # util.activate_window_by_title()
+        if not util.is_main_menu():
             if os.path.exists(exe_path):
                 try:
                     subprocess.run([exe_path])
@@ -38,39 +40,29 @@ class GameLauncher:
                 return
 
             time.sleep(5)
-            activate_window_by_title()
+            util.activate_window_by_title()
 
-            wait_and_click_image("launch")
-            if wait_image("update2",max_attempts=10):
-                wait_and_click_image("update2")
-                wait_and_click_image("launch",max_attempts=600)
+            util.wait_and_click_image("launch")
+            if util.wait_image("update2",max_attempts=10):
+                util.wait_and_click_image("update2")
+                util.wait_and_click_image("launch",max_attempts=600)
 
         time.sleep(10)
-        activate_window_by_title()
+        util.activate_window_by_title()
 
         start_time = time.time()
         count = 0
         while True:
             count += 1
             if count % 4 == 0:
-                activate_window_by_title()
-            # if wait_image("update", max_attempts=1):
-            #     wait_and_click_image("update")
-            # if wait_image("yes3", max_attempts=1):
-            #     wait_and_click_image("yes3")
-            # if wait_image("yes", max_attempts=1):
-            #     wait_and_click_image("yes")
-            # if wait_image("launch", max_attempts=1):
-            #     wait_and_click_image("launch")
-            # if wait_image("update2", max_attempts=1):
-            #     wait_and_click_image("update2")
-            found_image = wait_images(["update", "yes3", "yes", "launch", "update2"], max_attempts=1)
+                util.activate_window_by_title()
+            found_image = util.wait_images(["update", "yes3", "yes", "launch", "update2"], max_attempts=1)
             if found_image:
-                wait_and_click_image(found_image)
+                util.wait_and_click_image(found_image)
 
-            if is_main_menu():
+            if util.is_main_menu():
                 break
-            click_coordinate(900,800)
+            util.click_coordinate(900,800)
             time.sleep(0.1)
 
             # 检查是否超时
@@ -78,7 +70,7 @@ class GameLauncher:
                 raise TimeoutError("启动游戏超时，超过20分钟未进入主菜单")
 
 if __name__ == "__main__":
-    activate_window_by_title()
+    util.activate_window_by_title()
     launcher = GameLauncher()
 
     launcher.launch_game()

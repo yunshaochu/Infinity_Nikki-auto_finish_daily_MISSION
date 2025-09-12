@@ -4,9 +4,11 @@ import time
 import pyautogui
 
 from Util.get_path import get_image_path, get_picture_path
-from Util.util import click_coordinate, press_keyboard, wait_image, activate_window_by_title, to_main_menu
+from Util import NikkiUtil
 from 微信ocr import wechat_ocr, OutputType
 
+# 初始化工具类实例
+util = NikkiUtil()
 
 
 class DailyMissionRecognizer:
@@ -35,7 +37,7 @@ class DailyMissionRecognizer:
         time.sleep(1)
         for x, y in self.coordinates:
             try:
-                click_coordinate(x, y)
+                util.click_coordinate(x, y)
                 self.capture_and_analyze_mission_detail()
             except Exception as e:
                 print(f"处理坐标({x}, {y})时发生错误: {str(e)}")
@@ -44,11 +46,11 @@ class DailyMissionRecognizer:
     def get_diamond(self):
         self.open_daily_first()
         time.sleep(3)
-        click_coordinate(1800,675)
-        click_coordinate(1800,675)
-        click_coordinate(1800,675)
-        # press_keyboard('l')
-        to_main_menu()
+        util.click_coordinate(1800,675)
+        util.click_coordinate(1800,675)
+        util.click_coordinate(1800,675)
+        # util.press_keyboard('l')
+        util.to_main_menu()
 
     def isFinish(self):
         """
@@ -61,8 +63,8 @@ class DailyMissionRecognizer:
             region=(1750, 730, 1840 - 1750, 840 - 730)  # 计算区域宽高
         )
         res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
-        # press_keyboard('l')
-        to_main_menu()
+        # util.press_keyboard('l')
+        util.to_main_menu()
         if "500" in res_text:
             print("活跃度到达500")
             return True
@@ -121,8 +123,8 @@ class DailyMissionRecognizer:
         print("开始检测日常任务")
         self.open_daily_first()
         self.process_coordinates()
-        # press_keyboard('l')
-        to_main_menu()
+        # util.press_keyboard('l')
+        util.to_main_menu()
         print("检测到的任务类型:", self.task_queue)
         return self.task_queue
 
@@ -132,16 +134,16 @@ class DailyMissionRecognizer:
         打开日常任务1
         :return:
         """
-        press_keyboard('l')
-        wait_image('return')
+        util.press_keyboard('l')
+        util.wait_image('return')
         time.sleep(1)
-        click_coordinate(530, 400)
+        util.click_coordinate(530, 400)
         time.sleep(1)
-        wait_image('return')
+        util.wait_image('return')
 
 
 if __name__ == "__main__":
-    activate_window_by_title()
+    util.activate_window_by_title()
     recognizer = DailyMissionRecognizer()
     recognizer.get_diamond()
 

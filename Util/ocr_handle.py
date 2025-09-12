@@ -1,13 +1,14 @@
 import pyautogui
-
 from 微信ocr import wechat_ocr, OutputType
 
 
-def capture_and_analyze_mission_detail(region,screenshot_path,destination="花焰群岛",):
+def capture_and_analyze_mission_detail(region, screenshot_path, destination="花焰群岛"):
     """
     截图指定区域并调用OCR分析结果。
     """
-    from Util.util import click_coordinate
+    from Util import NikkiUtil  # 内部导入以避免循环依赖
+    global util  # 如果需要跨函数使用，可以使用 global
+    util = NikkiUtil()
 
     pyautogui.screenshot(
         screenshot_path,
@@ -20,7 +21,7 @@ def capture_and_analyze_mission_detail(region,screenshot_path,destination="花�
         print(f"未找到目标 '{destination}'")
         return None
     print(f"目标 '{destination}' 的坐标为: x={target_pos[0]}, y={target_pos[1]}")
-    # click_coordinate(*target_pos)
+    # util.click_coordinate(*target_pos)
     return target_pos
 def find_target_coordinates(ocr_data, target_text):
     """从OCR结果中查找目标坐标"""

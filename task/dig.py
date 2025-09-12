@@ -1,7 +1,9 @@
 import time
 
-from Util.util import press_keyboard, wait_and_click_image, to_main_menu, activate_window_by_title, click_coordinate, \
-    wait_image
+from Util import NikkiUtil
+
+# 初始化工具类实例
+util = NikkiUtil()
 
 
 class DiggingTask:
@@ -10,16 +12,11 @@ class DiggingTask:
 
     def execute(self):
         print("开始挖掘")
-        activate_window_by_title()
-        press_keyboard('esc')
-        wait_and_click_image('dig')
-        if wait_image('harvest',max_attempts=10):
-            wait_and_click_image('harvest')  # 这一句目前不是100%成功
-            click_coordinate(1800, 770)
-            wait_and_click_image('dig2')
-        to_main_menu()
-
-
-if __name__ == "__main__":
-    task = DiggingTask()
-    task.execute()
+        util.activate_window_by_title()
+        util.press_keyboard('esc')
+        util.wait_and_click_image('dig')
+        if util.wait_image('harvest',max_attempts=10):
+            util.wait_and_click_image('harvest')  # 这一句目前不是100%成功
+            util.click_coordinate(1800, 770)
+            util.wait_and_click_image('dig2')
+        util.to_main_menu()

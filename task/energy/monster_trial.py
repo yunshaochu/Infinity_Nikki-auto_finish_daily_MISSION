@@ -2,8 +2,11 @@ import time
 import pyautogui
 import json
 from Util.get_path import get_picture_path, get_config_path
-from Util.util import activate_window_by_title, click_coordinate, wait_and_click_image
+from Util import NikkiUtil
 from 微信ocr import wechat_ocr
+
+# 初始化工具类实例
+util = NikkiUtil()
 
 # 魔物试炼幻境
 class MonsterTrialAutomation:
@@ -30,9 +33,9 @@ class MonsterTrialAutomation:
 
     def _prepare_environment(self):
         """环境准备工作"""
-        # activate_window_by_title()
+        # util.activate_window_by_title()
         if self.monster == "贪婪囚鸟":
-            click_coordinate(375, 200)
+            util.click_coordinate(375, 200)
             time.sleep(0.5)
 
     def _process_ocr(self):
@@ -49,11 +52,11 @@ class MonsterTrialAutomation:
             return
 
         print(f"目标 '{self.target}' 的坐标为: x={target_pos[0]}, y={target_pos[1]}")
-        click_coordinate(*target_pos)
-        wait_and_click_image("quickChallenge")
+        util.click_coordinate(*target_pos)
+        util.wait_and_click_image("quickChallenge")
         if num == "all":
-            wait_and_click_image("max")
-        wait_and_click_image("useEnergy")
+            util.wait_and_click_image("max")
+        util.wait_and_click_image("useEnergy")
 
     def run(self,num):
         """执行完整自动化流程"""
@@ -63,6 +66,6 @@ class MonsterTrialAutomation:
 
 
 if __name__ == "__main__":
-    activate_window_by_title()
+    util.activate_window_by_title()
     automation = MonsterTrialAutomation()
     automation.run("one")

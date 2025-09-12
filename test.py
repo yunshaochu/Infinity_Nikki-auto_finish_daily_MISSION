@@ -2,11 +2,13 @@ import time
 
 import pyautogui
 
-from Util.util import wait_and_click_image, activate_window_by_title, wait_image, map_jump, press_keyboard, \
-    click_coordinate, to_main_menu
+from Util import NikkiUtil
 from task.starSea import StarSeaDaily
 
-activate_window_by_title()
+# 初始化工具类实例
+util = NikkiUtil()
 
-# wait_and_click_image('巨石岩仔')
+util.activate_window_by_title()
+
+# util.wait_and_click_image('巨石岩仔')
 StarSeaDaily().get_diamond()
