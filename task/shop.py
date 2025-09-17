@@ -28,6 +28,13 @@ class ShopTask:
             util.click_coordinate(950,40)
             util.click_coordinate(950,40)
 
+        if  util.wait_image("freeShop3", max_attempts=5):
+            util.wait_and_click_image("freeShop3")
+            util.wait_and_click_image("yes")
+            util.click_coordinate(950,40)
+            util.click_coordinate(950,40)
+            util.click_coordinate(950,40)
+
         pyautogui.moveTo(1000, 500)
         pyautogui.scroll(800)
 

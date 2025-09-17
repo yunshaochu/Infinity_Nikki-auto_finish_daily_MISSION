@@ -59,6 +59,9 @@ class GameLauncher:
             found_image = util.wait_images(["update", "yes3", "yes", "launch", "update2"], max_attempts=1)
             if found_image:
                 util.wait_and_click_image(found_image)
+                if found_image == "update2" or found_image == "update":
+                    time.sleep(15)
+                    pyautogui.hotkey("alt", "tab")
 
             if util.is_main_menu():
                 break

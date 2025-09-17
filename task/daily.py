@@ -3,7 +3,7 @@ import time
 
 import pyautogui
 
-from Util.get_path import get_image_path, get_picture_path
+from Util.get_path import get_image_path, get_picture_path, find_project_root
 from Util import NikkiUtil
 from 微信ocr import wechat_ocr, OutputType
 
@@ -56,7 +56,22 @@ class DailyMissionRecognizer:
         """
         看看每日任务活跃度是否到达500
         """
-        self.open_daily_first()
+        # self.open_daily_first()
+
+        util.press_keyboard('l')
+        util.wait_image('return')
+        time.sleep(1)
+
+        pyautogui.screenshot(
+            os.path.join(find_project_root(), 'resource', 'dailyResult', '.png'),
+            region=(180,110,855 - 180, 965 - 110)  # 计算区域宽高
+        )
+
+
+        util.click_coordinate(530, 400)
+        time.sleep(1)
+        util.wait_image('return')
+
         time.sleep(1.5)
         pyautogui.screenshot(
             self.screenshot_path,

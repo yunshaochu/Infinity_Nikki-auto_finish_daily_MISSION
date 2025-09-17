@@ -57,14 +57,14 @@ class NikkiUtil:
         """
         位置点击——地图专用
         :param destination:
-        :param screenshot_path:
+        :param screenshot_path1:
         :return:
         """
-        screenshot_path = get_picture_path(screenshot_path)
+        screenshot_path1 = get_picture_path(screenshot_path)
         region = (1300, 100, 1850 - 1300, 1000 - 100)  # 截图区域，氛围是将要跳转的地图名称列表
 
         # 首先，看看不滚到最底下，能不能直接找到目的地
-        target_pos = capture_and_analyze_mission_detail(region, screenshot_path, destination)
+        target_pos = capture_and_analyze_mission_detail(region, screenshot_path1, destination)
 
         # 其次，滚到最底下，看看不点击"心愿原野"能不能找到目的地（如果在主世界和星海，这一步就结束了）
         if not target_pos:
@@ -72,7 +72,7 @@ class NikkiUtil:
             pyautogui.moveTo(1555, 555)
             # 鼠标滚轮向下滑动1000
             pyautogui.scroll(-10000)
-            target_pos = capture_and_analyze_mission_detail(region, screenshot_path, destination)
+            target_pos = capture_and_analyze_mission_detail(region, screenshot_path1, destination)
 
         # 还是不行的话，最后点击"心愿原野"，再找目的地
         if not target_pos:
@@ -81,7 +81,7 @@ class NikkiUtil:
             pyautogui.moveTo(1555, 555)
             # 鼠标滚轮向下滑动1000
             pyautogui.scroll(-10000)
-            target_pos = capture_and_analyze_mission_detail(region, screenshot_path, destination)
+            target_pos = capture_and_analyze_mission_detail(region, screenshot_path1, destination)
         # 把坐标转为相对于屏幕左上角的坐标，1300 100是截图的图片左上角顶点
         if target_pos:
             target_pos = list(target_pos)
