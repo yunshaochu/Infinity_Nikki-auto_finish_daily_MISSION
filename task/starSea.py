@@ -73,30 +73,18 @@ class StarSeaDaily:
         分析OCR结果，提取任务类型并加入任务队列。
         :param res_text: OCR返回的文本列表
         """
-        keywords = ["心愿信笺"]
+        keywords = ["心愿信笺","星图绘册","点亮"]
         for text_line in res_text:
             for keyword in keywords:
                 if keyword in text_line:
-                    if keyword == "祝福闪光":
-                        # 检查是否同时包含"等级"或"幻境"
-                        if "等级" in text_line:
-                            self.task_queue.add("提升祝福闪光等级")
-                        elif "幻境" in text_line:
-                            self.task_queue.add("祝福闪光幻境")
-                    elif keyword == "魔气怪":
-                        if "魔物试炼幻境" in text_line:
-                            self.task_queue.add("魔物试炼幻境")
-                        else:
-                            self.task_queue.add(keyword)
-                    else:
-                        self.task_queue.add(keyword)
+                    self.task_queue.add(keyword)
                     break
 
     def run(self):
         """
         执行任务检测流程。
         """
-        print("开始检测日常任务")
+        print("开始检测星海日常任务")
         self.open_daily_first()
         self.process_coordinates()
         # util.press_keyboard('l')
@@ -278,15 +266,26 @@ class StarSeaTask:
 
     def execute(self):
         util.activate_window_by_title("无限暖暖")
+
+        mission = StarSeaDaily().run()
+
+
         self.share()
         self.ring()
-        self.photo_star_book()
-        self.post_card()
+
+        if "星图绘册" in mission or "点亮" in mission:
+            print("————————————————————————执行星图绘册/点亮任务————————————————————————————")
+            self.photo_star_book()
+        if "心愿信笺" in mission:
+            print("————————————————————————执行心愿信笺任务————————————————————————————")
+            self.post_card()
+
+
         StarSeaDaily().get_diamond()
 
 
 if __name__ == '__main__':
     util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    # task.execute()
-    task.photo_star_book()
+    task.execute()
+    # task.photo_star_book()
