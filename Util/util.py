@@ -268,7 +268,7 @@ class NikkiUtil:
         确保当前界面在主菜单。
         通过不断查找并点击"return"按钮，直到找到"daMiao"图像为止。
         """
-        while True:
+        for i in range(15):
             result = self.is_main_menu()
             if result:
                 print("已找到 'daMiao' 图像，确认在主菜单界面。")
@@ -299,7 +299,8 @@ class NikkiUtil:
 
         if self.wait_image("daMiao", max_attempts=1):
             return True
-
+        # 鼠标移动到（80，160）
+        pyautogui.moveTo(80, 160)
         # 再次查找"shine"图像
         if self.wait_image("shine", max_attempts=4):
             self.press_keyboard("esc")

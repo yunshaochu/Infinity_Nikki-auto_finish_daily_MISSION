@@ -56,7 +56,7 @@ class MonsterTrialAutomation:
         util.wait_and_click_image("quickChallenge")
         if num == "all":
             util.wait_and_click_image("max")
-        util.wait_and_click_image("useEnergy")
+        # util.wait_and_click_image("useEnergy")
 
     def run(self,num):
         """执行完整自动化流程"""

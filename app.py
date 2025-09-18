@@ -1,4 +1,6 @@
 import json
+import traceback
+
 from Util import NikkiUtil
 from task.daily import DailyMissionRecognizer
 from task.dig import DiggingTask
@@ -88,6 +90,8 @@ def main():
         util.activate_window_by_title()
         util.to_main_menu()
         name = task["name"]
+        print("--------------------------------------------------开始每日任务---------------------------------------------------------")
+
         if not task.get("enabled", True):
             continue
         if name not in daily:
@@ -158,10 +162,6 @@ def main():
     # if num == "one":
     choose = config["每日体力"]
     util.to_main_menu()
-    # energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
-    #                          choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
-    # energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
-    #                          choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
 
     # 修改为：固定先消耗flower，再消耗fish。
 
@@ -185,7 +185,8 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(e)
+    #     打印错误堆栈
+        traceback.print_exc()
     finally:
         config = load_task_config()
         if config.get("完成每日任务后关闭游戏", False):
