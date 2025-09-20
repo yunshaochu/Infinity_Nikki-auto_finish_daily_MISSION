@@ -126,6 +126,45 @@ class NikkiUtil:
             # 而你的脚本不是，可能会抛出权限错误
             print(f"激活窗口时发生错误: {e}")
 
+
+
+    def activate_window_by_title_force(self, window_title="无限暖暖"):
+        """
+        根据窗口标题激活窗口
+        :param window_title: 窗口标题
+        """
+        try:
+            window_list = gw.getWindowsWithTitle(window_title)
+
+            if window_list:
+                target_window = window_list[0]
+
+                # 1. 如果窗口已最小化，先恢复它
+                if target_window.isMinimized:
+                    target_window.restore()
+                    time.sleep(0.2)  # 等待窗口恢复
+
+                # 2. 最小化窗口，打破当前的焦点状态
+                target_window.minimize()
+                time.sleep(2)  # 等待窗口最小化
+
+                # 3. 恢复窗口，把它带到Z序（堆叠顺序）的顶层
+                target_window.restore()
+                time.sleep(0.2)  # 等待窗口恢复
+
+                # 4. 最后再激活，获得键盘焦点
+                target_window.activate()
+
+                print(f"成功强制激活窗口: {window_title}")
+
+            else:
+                print(f"未找到标题为 '{window_title}' 的窗口。")
+
+        except Exception as e:
+            # 这里特别要注意，如果目标窗口是以管理员权限运行的，
+            # 而你的脚本不是，可能会抛出权限错误
+            print(f"激活窗口时发生错误: {e}")
+
     def wait_image(self, image_path, wait_interval=0.5, max_attempts=100):
         """
         在屏幕上查找图片并点击，同时确保指定窗口已激活。

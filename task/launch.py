@@ -55,7 +55,12 @@ class GameLauncher:
         while True:
             count += 1
             if count % 4 == 0:
+                pyautogui.hotkey("alt", "tab")
                 util.activate_window_by_title()
+                if time.time() - start_time > 900:  # 15分钟 后使用更佳的窗口激活方式。但新wxnn使用这种方法老是闪退，还是谨慎用吧
+                    util.activate_window_by_title_force()
+
+
             found_image = util.wait_images(["update", "yes3", "yes", "launch", "update2"], max_attempts=1)
             if found_image:
                 util.wait_and_click_image(found_image)
@@ -67,6 +72,8 @@ class GameLauncher:
                 break
             util.click_coordinate(900,800)
             time.sleep(0.1)
+
+
 
             # 检查是否超时
             if time.time() - start_time > 1200:  # 20分钟 = 1200秒
