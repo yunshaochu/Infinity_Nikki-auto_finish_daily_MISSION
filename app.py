@@ -179,6 +179,7 @@ def main():
     recognizer.get_diamond()
 
     StarSeaTask().execute()
+    recognizer.isFinish()
 
 
 if __name__ == "__main__":

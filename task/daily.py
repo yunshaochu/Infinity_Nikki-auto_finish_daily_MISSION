@@ -62,6 +62,7 @@ class DailyMissionRecognizer:
         util.wait_image('return')
         time.sleep(1)
 
+        # 把每日任务的结果截图
         pyautogui.screenshot(
             os.path.join(find_project_root(), 'resource', 'dailyResult', 'daily_result.png'),
             region=(180,110,855 - 180, 965 - 110)  # 计算区域宽高
