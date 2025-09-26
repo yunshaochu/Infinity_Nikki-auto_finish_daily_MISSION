@@ -55,7 +55,7 @@ class GameLauncher:
         while True:
             count += 1
             if count % 4 == 0:
-                pyautogui.hotkey("alt", "tab")
+                # pyautogui.hotkey("alt", "tab")
                 util.activate_window_by_title()
                 if time.time() - start_time > 900:  # 15分钟 后使用更佳的窗口激活方式。但新wxnn使用这种方法老是闪退，还是谨慎用吧
                     util.activate_window_by_title_force()
