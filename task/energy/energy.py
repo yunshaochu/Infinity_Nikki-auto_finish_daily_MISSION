@@ -47,6 +47,7 @@ class EnergyTask:
         util.click_coordinate(280, 500)
         automation = MonsterTrialAutomation()
         automation.run(num)
+        util.wait_and_click_image("useEnergy")
         util.click_coordinate(1350, 335) # 保险措施，如果此时体力不够/周本次数耗尽，要点击这里关闭页面
         util.click_coordinate(1350, 335) # 保险措施，如果此时体力不够/周本次数耗尽，要点击这里关闭页面
         util.to_main_menu()
@@ -55,7 +56,8 @@ class EnergyTask:
         self.open_energy()
         util.click_coordinate(500, 800)
         automation = BlessingGlory()
-        automation.run("num")
+        automation.run(num)
+        util.wait_and_click_image("useEnergy")
         util.click_coordinate(1350, 335) # 保险措施，如果此时体力不够/周本次数耗尽，要点击这里关闭页面
         util.click_coordinate(1350, 335) # 保险措施，如果此时体力不够/周本次数耗尽，要点击这里关闭页面
         util.to_main_menu()

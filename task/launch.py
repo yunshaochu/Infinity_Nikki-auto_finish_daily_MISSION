@@ -2,9 +2,7 @@ import subprocess
 import os
 import pyautogui
 import time
-import pygetwindow as gw
 
-from Util.get_path import get_picture_path
 from Util import NikkiUtil
 
 # 初始化工具类实例
