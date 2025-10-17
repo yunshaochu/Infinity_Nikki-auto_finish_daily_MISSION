@@ -73,7 +73,7 @@ class StarSeaDaily:
         分析OCR结果，提取任务类型并加入任务队列。
         :param res_text: OCR返回的文本列表
         """
-        keywords = ["心愿信笺","星图绘册","点亮"]
+        keywords = ["星愿","星图绘册","点亮"]
         for text_line in res_text:
             for keyword in keywords:
                 if keyword in text_line:
@@ -161,6 +161,9 @@ class StarSeaTask:
         util.press_keyboard('F')
         util.wait_and_click_image('yes_post')
         util.wait_and_click_image("yes4")
+        time.sleep(1)
+        PhotoTask().get_photo()
+
 
 
 
@@ -276,8 +279,8 @@ class StarSeaTask:
         if "星图绘册" in mission or "点亮" in mission:
             print("————————————————————————执行星图绘册/点亮任务————————————————————————————")
             self.photo_star_book()
-        if "心愿信笺" in mission:
-            print("————————————————————————执行心愿信笺任务————————————————————————————")
+        if "星愿" in mission:
+            print("————————————————————————执行星愿信笺任务————————————————————————————")
             self.post_card()
 
 
@@ -287,5 +290,5 @@ class StarSeaTask:
 if __name__ == '__main__':
     util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    task.execute()
+    task.post_card()
     # task.photo_star_book()
