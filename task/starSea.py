@@ -119,6 +119,9 @@ class StarSeaTask:
         self.beach = [
             (1665, 866)  # 传送锚点位置2 海滩
         ]
+        self.center = [
+            (72, 616)  # 传送锚点位置3 中心
+        ]
 
     def _walk(self, movement_sequence):
         """根据动作序列移动角色"""
@@ -262,10 +265,11 @@ class StarSeaTask:
 
     def ring(self):
         util.to_main_menu()
-        util.map_jump(coordinates=self.mian_island, destination="星海")
+        util.map_jump(coordinates=self.center, destination="星海")
         # 长按E键
-        util.press_keyboard("E", duration=5)
+        util.press_keyboard("X", duration=5)
         util.to_main_menu()
+        #
 
     def execute(self):
         util.activate_window_by_title("无限暖暖")
@@ -274,21 +278,27 @@ class StarSeaTask:
 
 
         self.share()
-        self.ring()
 
         if "星图绘册" in mission or "点亮" in mission:
             print("————————————————————————执行星图绘册/点亮任务————————————————————————————")
             self.photo_star_book()
+            time.sleep(2)
+            self.photo_star_book()
+
         if "星愿" in mission:
             print("————————————————————————执行星愿信笺任务————————————————————————————")
             self.post_card()
+            time.sleep(2)
+            self.post_card()
 
+        self.ring()
 
         StarSeaDaily().get_diamond()
+        time.sleep(340)
 
 
 if __name__ == '__main__':
     util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    task.post_card()
-    # task.photo_star_book()
+    # task.post_card()
+    task.photo_star_book()
