@@ -13,6 +13,12 @@ util = NikkiUtil()
 
 util.activate_window_by_title()
 
-StarSeaTask().post_card()
+
+def _attack_sequence(times):
+    for _ in range(times):
+        pyautogui.mouseDown()
+        time.sleep(0.05)
+        pyautogui.mouseUp()
 
 
+_attack_sequence(10)

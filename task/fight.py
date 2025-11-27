@@ -58,12 +58,11 @@ class Fight:
         #     pyautogui.mouseUp(button='left')
         #     pyautogui.keyUp('q')
 
-    def _attack_sequence(self, times):
+    def _attack_sequence(times):
         for _ in range(times):
             pyautogui.mouseDown()
-            time.sleep(0.1)
+            time.sleep(0.05)
             pyautogui.mouseUp()
-            time.sleep(1)
 
     def fight_at_location(self, coordinates, destination, movement_sequence):
         util.map_jump(coordinates=coordinates,destination=destination)
