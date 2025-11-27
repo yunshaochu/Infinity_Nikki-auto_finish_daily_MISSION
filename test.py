@@ -13,9 +13,8 @@ util = NikkiUtil()
 
 util.activate_window_by_title()
 
-# util.wait_and_click_image('巨石岩仔')
-# StarSeaDaily().get_diamond()
-# energyTask = EnergyTask()
-#m
-# energyTask.enter_monster_trial(num="one")
-StarSeaTask().ring()
+# StarSeaTask().execute()
+util.map_jump(coordinates=[
+            (1410, 553)  # 传送锚点位置1 主岛
+        ], destination="星海")
+

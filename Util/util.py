@@ -66,6 +66,15 @@ class NikkiUtil:
         # 首先，看看不滚到最底下，能不能直接找到目的地
         target_pos = capture_and_analyze_mission_detail(region, screenshot_path1, destination)
 
+        # 如果找不到，就滚到最上面，看看能不能找到目的地
+        if not target_pos:
+            # 鼠标移动到（1555，555）
+            pyautogui.moveTo(1555, 555)
+            # 鼠标滚轮向下滑动1000
+            pyautogui.scroll(10000)
+            target_pos = capture_and_analyze_mission_detail(region, screenshot_path1, destination)
+
+
         # 其次，滚到最底下，看看不点击"心愿原野"能不能找到目的地（如果在主世界和星海，这一步就结束了）
         if not target_pos:
             # 鼠标移动到（1555，555）
@@ -80,7 +89,7 @@ class NikkiUtil:
             # 鼠标移动到（1555，555）
             pyautogui.moveTo(1555, 555)
             # 鼠标滚轮向下滑动1000
-            pyautogui.scroll(-10000)
+            pyautogui.scroll(10000)
             target_pos = capture_and_analyze_mission_detail(region, screenshot_path1, destination)
         # 把坐标转为相对于屏幕左上角的坐标，1300 100是截图的图片左上角顶点
         if target_pos:
