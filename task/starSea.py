@@ -284,17 +284,19 @@ class StarSeaTask:
             self.photo_star_book()
             time.sleep(2)
             self.photo_star_book()
+            time.sleep(2)
 
         if "星愿" in mission:
             print("————————————————————————执行星愿信笺任务————————————————————————————")
             self.post_card()
             time.sleep(2)
             self.post_card()
+            time.sleep(2)
 
         self.ring()
 
         StarSeaDaily().get_diamond()
-        time.sleep(340)
+        time.sleep(340) # 等待星光凝结
 
 
 if __name__ == '__main__':

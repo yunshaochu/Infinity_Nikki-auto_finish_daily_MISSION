@@ -13,8 +13,6 @@ util = NikkiUtil()
 
 util.activate_window_by_title()
 
-# StarSeaTask().execute()
-util.map_jump(coordinates=[
-            (1410, 553)  # 传送锚点位置1 主岛
-        ], destination="星海")
+StarSeaTask().post_card()
+
 
