@@ -89,7 +89,7 @@ class NikkiUtil:
             # 鼠标移动到（1555，555）
             pyautogui.moveTo(1555, 555)
             # 鼠标滚轮向下滑动1000
-            pyautogui.scroll(10000)
+            pyautogui.scroll(-10000)
             target_pos = capture_and_analyze_mission_detail(region, screenshot_path1, destination)
         # 把坐标转为相对于屏幕左上角的坐标，1300 100是截图的图片左上角顶点
         if target_pos:

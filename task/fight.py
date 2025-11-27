@@ -58,7 +58,7 @@ class Fight:
         #     pyautogui.mouseUp(button='left')
         #     pyautogui.keyUp('q')
 
-    def _attack_sequence(times):
+    def _attack_sequence(self,times):
         for _ in range(times):
             pyautogui.mouseDown()
             time.sleep(0.05)
