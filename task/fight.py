@@ -75,6 +75,17 @@ class Fight:
         coordinates 写传送点在地图上的坐标
         :return:
         """
+        # 1. 开启八音盒：在按下tab键之后，等待1s，点击坐标（1175，150），松开tab
+        pyautogui.keyDown('tab')
+        time.sleep(1)
+        pyautogui.click(1175, 150)
+        time.sleep(0.5)
+        pyautogui.click(1175, 150)
+        time.sleep(0.1)
+        pyautogui.keyUp('tab')
+
+
+
         # 示例点位1
         self.fight_at_location(
             destination = "花焰群岛",
@@ -121,6 +132,12 @@ class Fight:
                 {'type': 'attack', 'times': 16}
             ]
         )
+
+        # 2. 关闭八音盒：在按下tab键之后，等待1s，点击坐标（750，150），松开tab
+        pyautogui.keyDown('tab')
+        time.sleep(1)
+        pyautogui.click(750, 150)
+        pyautogui.keyUp('tab')
 
 
 if __name__ == "__main__":

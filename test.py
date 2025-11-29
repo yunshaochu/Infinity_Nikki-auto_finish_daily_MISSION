@@ -13,12 +13,10 @@ util = NikkiUtil()
 
 util.activate_window_by_title()
 
-
-def _attack_sequence(times):
-    for _ in range(times):
-        pyautogui.mouseDown()
-        time.sleep(0.05)
-        pyautogui.mouseUp()
-
-
-_attack_sequence(10)
+pyautogui.keyDown('tab')
+time.sleep(1)
+pyautogui.click(750, 150)
+time.sleep(1)
+pyautogui.click(750, 150)
+time.sleep(0.2)
+pyautogui.keyUp('tab')
