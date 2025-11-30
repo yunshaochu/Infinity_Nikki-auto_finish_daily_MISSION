@@ -41,10 +41,18 @@ def close_game_process(window_title="无限暖暖"):
         except Exception as e:
             print(f"终止进程时发生错误: {e}")
 
-        # 关闭第二个窗口
-        time.sleep(60)
-        window = gw.getWindowsWithTitle(window_title)[0]
-        window.close()
+        time.sleep(5)
+
+        # 在一分钟内不断检测窗口，如果有的话就关闭并退出循环
+        start_time = time.time()
+        while time.time() - start_time < 60:
+            windows = gw.getWindowsWithTitle(window_title)
+            if windows:
+                window = windows[0]
+                window.close()
+                print(f"在 {int(time.time() - start_time)} 秒后检测到窗口并已关闭")
+                break
+            time.sleep(1)  # 每秒检测一次
 
     except IndexError:
         print(f"未找到窗口: {window_title}")
