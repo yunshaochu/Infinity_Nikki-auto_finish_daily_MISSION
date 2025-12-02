@@ -9,14 +9,6 @@
             "enabled": true
         },
         {
-            "name": "魔气怪",
-            "enabled": true
-        },
-        {
-            "name": "小游戏",
-            "enabled": true
-        },
-        {
             "name": "照片",
             "enabled": true
         },
@@ -38,6 +30,14 @@
         },
         {
             "name": "提升祝福闪光等级",
+            "enabled": true
+        },
+        {
+            "name": "魔气怪",
+            "enabled": true
+        },
+        {
+            "name": "小游戏",
             "enabled": true
         }
     ],
