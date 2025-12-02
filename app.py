@@ -54,10 +54,10 @@ def main():
 
     util.to_main_menu()
 
-    util.map_jump(coordinates=[
-            (630, 170), # 传送锚点位置
-            (1400, 625) # 二级菜单点击位置
-        ], destination="石树田无人区")
+    # util.map_jump(coordinates=[
+    #         (630, 170), # 传送锚点位置
+    #         (1400, 625) # 二级菜单点击位置
+    #     ], destination="石树田无人区")
 
     # 获取每日任务
     recognizer = DailyMissionRecognizer()
@@ -83,7 +83,6 @@ def main():
     else:
         print("不可打周本")
 
-    num = "one"
 
 
     for task in task_list:
@@ -191,4 +190,5 @@ if __name__ == "__main__":
     finally:
         config = load_task_config()
         if config.get("完成每日任务后关闭游戏", False):
-            util.close_game_window()
+            from temp.close import close_game_process
+            close_game_process()
