@@ -57,7 +57,7 @@ class DailyMissionRecognizer:
         看看每日任务活跃度是否到达500
         """
         # self.open_daily_first()
-
+        NikkiUtil().to_main_menu()
         util.press_keyboard('l')
         util.wait_image('return')
         time.sleep(1)
@@ -76,7 +76,7 @@ class DailyMissionRecognizer:
         time.sleep(1.5)
         pyautogui.screenshot(
             self.screenshot_path,
-            region=(1750, 730, 1840 - 1750, 840 - 730)  # 计算区域宽高
+            region=(1742, 762, 1848 - 1742, 871 - 762)  # 计算区域宽高
         )
         res_text = wechat_ocr(self.screenshot_path, OutputType.Concise)
         # util.press_keyboard('l')

@@ -26,7 +26,7 @@ class Fight:
             elif act == 'wait':
                 time.sleep(action['duration'])
             elif act == 'attack':
-                self._attack_sequence(action.get('times', 16))
+                self._attack_sequence(action.get('times', 30))
                 # result = util.wait_image('daMiao',max_attempts=10)
                 result = util.is_main_menu()
                 # 如果没出现"daMiao"说明死了，点一下复活
@@ -61,8 +61,9 @@ class Fight:
     def _attack_sequence(self,times):
         for _ in range(times):
             pyautogui.mouseDown()
-            time.sleep(0.05)
+            time.sleep(0.05) # 如果是弓箭，就要0.05s
             pyautogui.mouseUp()
+            time.sleep(0.2)
 
     def fight_at_location(self, coordinates, destination, movement_sequence):
         util.map_jump(coordinates=coordinates,destination=destination)
