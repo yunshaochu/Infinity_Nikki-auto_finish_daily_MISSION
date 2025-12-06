@@ -134,10 +134,16 @@ class Fight:
             ]
         )
 
+        util.wait_and_click_image('revive') # 说不定会死，总之点一下复活
+        time.sleep(3)
+
         # 2. 关闭八音盒：在按下tab键之后，等待1s，点击坐标（750，150），松开tab
         pyautogui.keyDown('tab')
         time.sleep(1)
         pyautogui.click(750, 150)
+        time.sleep(0.5)
+        pyautogui.click(750, 150)
+        time.sleep(0.1)
         pyautogui.keyUp('tab')
 
 
