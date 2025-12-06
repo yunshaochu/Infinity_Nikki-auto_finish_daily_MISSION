@@ -1,3 +1,5 @@
+import time
+
 from Util import NikkiUtil
 from task.energy.blessing_glory import BlessingGlory
 from task.energy.monster_trial import MonsterTrialAutomation
@@ -87,6 +89,8 @@ class EnergyTask:
     def enter_weekly_dungeon(self):
         self.open_energy()
         util.click_coordinate(1600, 500)
+        time.sleep(3)
+        util.click_coordinate(377, 320)
         util.wait_and_click_image("quickChallenge")
         util.wait_and_click_image("useEnergy")
         util.click_coordinate(1350, 335) # 保险措施，如果此时体力不够/周本次数耗尽，要点击这里关闭页面
