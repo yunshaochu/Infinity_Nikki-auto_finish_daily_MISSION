@@ -70,16 +70,26 @@ class Minigame:
             print("未检测到dialog图片，结束小游戏方法并重新开始")
             return False
 
-        # 不停点击（1420, 700），直到图片 dialog 消失
+        # 不停点击（1420, 700），直到图片 dialog 消失，增加超时机制
+        start_time = time.time()
+        timeout = 30  # 设置30秒超时
         while True:
+            if time.time() - start_time > timeout:
+                print("点击dialog超时，结束小游戏方法")
+                return False
             if not util.wait_image("dialog", max_attempts=1):
                 break
             util.click_coordinate(1420, 700)
             print("点击坐标（1420, 700)")
             time.sleep(0.5)
 
-        # 不停按下 f，直到图片 dialog 出现
+        # 不停按下 f，直到图片 dialog 出现，增加超时机制
+        start_time = time.time()
+        timeout = 300
         while True:
+            if time.time() - start_time > timeout:
+                print("等待dialog出现超时，结束小游戏方法")
+                return False
             if util.wait_image("dialog", max_attempts=1):
                 break
 
@@ -102,7 +112,13 @@ class Minigame:
             util.press_keyboard('f') # 推球
             time.sleep(0.1)
 
+        # 等待直到主菜单出现，增加超时机制
+        start_time = time.time()
+        timeout = 300
         while True:
+            if time.time() - start_time > timeout:
+                print("等待主菜单出现超时，结束小游戏方法")
+                return False
             # if util.wait_image("daMiao", max_attempts=1):
             #     break
             if util.is_main_menu():
