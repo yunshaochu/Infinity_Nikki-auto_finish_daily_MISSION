@@ -116,8 +116,17 @@ def wechat_ocr(image_path, output_type=OutputType.Detailed) -> dict:
 
     # 开始识别图片
     ocr_manager.DoOCRTask(image_path)
+    
+    # 添加超时机制防止无限循环
+    import time
+    start_time = time.time()
+    timeout = 30  # 30秒超时
+    
     while ocr_manager.m_task_id.qsize() != OCR_MAX_TASK_ID:
-        pass
+        # 检查是否超时
+        if time.time() - start_time > timeout:
+            raise TimeoutError(f"WeChat OCR任务超时 ({timeout}秒)")
+        time.sleep(0.1)  # 短暂休眠以减少CPU占用
 
     if output_type == OutputType.Concise:
         ocr_res["ocrResult"] = list(map(lambda i: i['text'], ocr_res["ocrResult"]))

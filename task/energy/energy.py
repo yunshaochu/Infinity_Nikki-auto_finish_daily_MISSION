@@ -23,7 +23,7 @@ class EnergyTask:
         打开体力副本
         :return:
         """
-        util.map_jump(coordinates=self.coordinates,destination="石树田无人区")
+        # util.map_jump(coordinates=self.coordinates,destination="石树田无人区")
         util.press_keyboard('l')
         
         # 等待"幻境挑战"图片出现，如果没出现则重试，最多5次
