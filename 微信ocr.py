@@ -3,6 +3,7 @@ import os
 import subprocess
 import json
 import time
+import threading
 from typing import *
 from wechat_ocr.ocr_manager import OcrManager, OCR_MAX_TASK_ID
 
@@ -106,7 +107,7 @@ def start_wechat_ocr(wechat_ocr_dir: str = "", wechat_dir: str = ""):
 
 
 def wechat_ocr(image_path, output_type=OutputType.Detailed) -> dict:
-    global ocr_res
+    global ocr_res, ocr_manager
     ocr_res = None
 
     wechatOcr, extracted = get_wechatOcr_path()
@@ -114,25 +115,24 @@ def wechat_ocr(image_path, output_type=OutputType.Detailed) -> dict:
     if not ocr_manager:
         start_wechat_ocr(extracted, wechatOcr)
 
-    # 开始识别图片
-    ocr_manager.DoOCRTask(image_path)
-    
-    # 添加超时机制防止无限循环
-    import time
-    start_time = time.time()
-    timeout = 30  # 30秒超时
-    
-    while ocr_manager.m_task_id.qsize() != OCR_MAX_TASK_ID:
-        # 检查是否超时
-        if time.time() - start_time > timeout:
-            raise TimeoutError(f"WeChat OCR任务超时 ({timeout}秒)")
-        time.sleep(0.1)  # 短暂休眠以减少CPU占用
+    def _wait_ocr():
+        ocr_manager.DoOCRTask(image_path)
+        while ocr_manager.m_task_id.qsize() != OCR_MAX_TASK_ID:
+            time.sleep(0.1)
+
+    thread = threading.Thread(target=_wait_ocr)
+    thread.start()
+    thread.join(timeout=30)
+
+    if thread.is_alive():
+        ocr_manager.KillWeChatOCR()
+        ocr_manager = None
+        raise TimeoutError(f"WeChat OCR任务超时 (30秒)，pb数据大小可能异常，已重启OCR服务")
 
     if output_type == OutputType.Concise:
         ocr_res["ocrResult"] = list(map(lambda i: i['text'], ocr_res["ocrResult"]))
         return ocr_res["ocrResult"]
     else:
-
         return ocr_res
 
 if __name__ == "__main__":

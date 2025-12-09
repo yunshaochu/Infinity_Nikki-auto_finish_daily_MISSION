@@ -174,7 +174,7 @@ class NikkiUtil:
             # 而你的脚本不是，可能会抛出权限错误
             print(f"激活窗口时发生错误: {e}")
 
-    def wait_image(self, image_path, wait_interval=0.5, max_attempts=100):
+    def wait_image(self, image_path, wait_interval=0.5, max_attempts=20):
         """
         在屏幕上查找图片并点击，同时确保指定窗口已激活。
         :param image_path: 图片路径
@@ -320,6 +320,7 @@ class NikkiUtil:
             result = self.is_main_menu()
             if result:
                 print("已找到 'daMiao' 图像，确认在主菜单界面。")
+                time.sleep(0.5)
                 break
             else:
                 # 如果没有找到"daMiao"图像，点击"return"按钮尝试返回主菜单
