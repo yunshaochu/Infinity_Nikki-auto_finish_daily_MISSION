@@ -76,6 +76,8 @@ class Fight:
         coordinates 写传送点在地图上的坐标
         :return:
         """
+        time.sleep(2)
+
         # 1. 开启八音盒：在按下tab键之后，等待1s，点击坐标（1175，150），松开tab
         pyautogui.keyDown('tab')
         time.sleep(1)
@@ -85,6 +87,7 @@ class Fight:
         time.sleep(0.1)
         pyautogui.keyUp('tab')
 
+        time.sleep(2)
 
 
         # 示例点位1

@@ -23,7 +23,7 @@ class GameLauncher:
         print("开始启动游戏")
         if exe_path == '':
             exe_path = self.exe_path
-        # util.activate_window_by_title()
+        util.activate_window_by_title()
         if not util.is_main_menu():
             if os.path.exists(exe_path):
                 try:
@@ -59,7 +59,7 @@ class GameLauncher:
                     util.activate_window_by_title_force()
 
 
-            found_image = util.wait_images(["update", "yes3", "yes", "launch", "update2"], max_attempts=1)
+            found_image = util.wait_images(["update", "yes", "yes2", "yes3", "yes4", "yes5", "launch", "update2"], max_attempts=1)
             if found_image:
                 util.wait_and_click_image(found_image)
                 if found_image == "update2" or found_image == "update":

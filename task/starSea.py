@@ -228,7 +228,7 @@ class StarSeaTask:
     #         {'type': 'wait', 'duration': 0.2},
     #         {'type': 'press', 'key': 'space'},
     #         {'type': 'wait', 'duration': 6},
-    #         {'type': 'key_up', 'key': 'w'},
+    #         {'type': 'key_up', 'w'},
     #
     #
     #         {'type': 'key_down', 'key': 'a'},
@@ -238,7 +238,7 @@ class StarSeaTask:
     #         {'type': 'wait', 'duration': 4},
     #         {'type': 'press', 'key': 'space'},
     #         {'type': 'wait', 'duration': 4},
-    #         {'type': 'key_up', 'key': 'a'},
+    #         {'type': 'key_up', 'a'},
     #
     #     ]
     #     self._walk(movement_sequence)
@@ -269,7 +269,61 @@ class StarSeaTask:
         # 长按E键
         util.press_keyboard("X", duration=5)
         util.to_main_menu()
-        #
+
+    # 点赞
+    def like(self):
+        util.press_keyboard("esc")
+        time.sleep(1)
+        pyautogui.click(573, 289)
+        time.sleep(2)
+        util.click_coordinate(1342, 56)
+        util.click_coordinate(1342, 56)
+        util.click_coordinate(1342, 56)
+
+
+        time.sleep(1)
+        pyautogui.click(485, 551)
+        pyautogui.click(485, 551)
+        pyautogui.click(485, 551)
+        pyautogui.click(485, 551)
+
+        time.sleep(1)
+        util.to_main_menu()
+
+
+
+
+    def put_mass(self):
+        """
+        放置摆件
+        1. 按一下a键
+        2. 按一下鼠标中键
+        3. 按一下z键
+        4. 按一下鼠标左键
+        """
+        # 1. 按一下a键
+        util.press_keyboard('a', duration=0.2)
+
+        time.sleep(1)
+
+        # 2. 按一下鼠标中键（持续0.1秒）
+        pyautogui.mouseDown(button='middle')
+        time.sleep(0.1)
+        pyautogui.mouseUp(button='middle')
+
+        time.sleep(1)
+
+        # 3.
+        pyautogui.keyDown('alt')
+        time.sleep(0.2)  # 停 0.1s
+        pyautogui.click(720, 1011)
+        time.sleep(0.2)  # 停 0.1s
+        pyautogui.keyUp('alt')
+
+        # 4. 按一下鼠标左键（持续0.1秒）
+        pyautogui.mouseDown(button='left')
+        time.sleep(0.1)
+        pyautogui.mouseUp(button='left')
 
     def execute(self):
         util.activate_window_by_title("无限暖暖")
@@ -294,6 +348,10 @@ class StarSeaTask:
             time.sleep(2)
 
         self.ring()
+
+        self.like()
+
+        self.put_mass()
 
         StarSeaDaily().get_diamond()
         time.sleep(340) # 等待星光凝结

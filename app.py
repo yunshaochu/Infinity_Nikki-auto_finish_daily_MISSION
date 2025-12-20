@@ -162,8 +162,11 @@ def main():
     choose = config["每日体力"]
     util.to_main_menu()
 
-    # 修改为：固定先消耗flower，再消耗fish。
 
+    SeasonPassTask().execute()
+    StarSeaTask().execute()
+
+    # 修改为：固定先消耗flower，再消耗fish。
     #TODO 把 config["副本设置"]["素材激化幻境"]["消耗"] 修改为列表，然后根据列表顺序消耗。比如下面的就对应列表 ["fish","fish2","flower"]
     energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
                              choice_consumable="fish")
@@ -171,13 +174,8 @@ def main():
                              choice_consumable="fish2")
     energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
                              choice_consumable="flower")
-
-
-    recognizer.get_diamond()
-    SeasonPassTask().execute()
     recognizer.get_diamond()
 
-    StarSeaTask().execute()
     recognizer.isFinish()
 
 
