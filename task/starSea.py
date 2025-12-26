@@ -274,7 +274,7 @@ class StarSeaTask:
     def like(self):
         util.press_keyboard("esc")
         time.sleep(1)
-        pyautogui.click(573, 289)
+        util.click_coordinate(573, 289)
         time.sleep(2)
         util.click_coordinate(1342, 56)
         util.click_coordinate(1342, 56)
@@ -282,10 +282,10 @@ class StarSeaTask:
 
 
         time.sleep(1)
-        pyautogui.click(485, 551)
-        pyautogui.click(485, 551)
-        pyautogui.click(485, 551)
-        pyautogui.click(485, 551)
+        util.click_coordinate(485, 551)
+        util.click_coordinate(485, 551)
+        util.click_coordinate(485, 551)
+        util.click_coordinate(485, 551)
 
         time.sleep(1)
         util.to_main_menu()
@@ -316,7 +316,7 @@ class StarSeaTask:
         # 3.
         pyautogui.keyDown('alt')
         time.sleep(0.2)  # 停 0.1s
-        pyautogui.click(720, 1011)
+        util.click_coordinate(720, 1011)
         time.sleep(0.2)  # 停 0.1s
         pyautogui.keyUp('alt')
 
@@ -360,5 +360,5 @@ class StarSeaTask:
 if __name__ == '__main__':
     util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    # task.post_card()
-    task.photo_star_book()
+    task.like()
+    # task.photo_star_book()

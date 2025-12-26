@@ -41,7 +41,7 @@ def close_game_process(window_title="无限暖暖"):
         except Exception as e:
             print(f"终止进程时发生错误: {e}")
 
-        time.sleep(5)
+        time.sleep(2)
 
         # 在一分钟内不断检测窗口，如果有的话就关闭并退出循环
         start_time = time.time()
