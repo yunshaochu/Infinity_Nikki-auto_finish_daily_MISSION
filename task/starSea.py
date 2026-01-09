@@ -114,12 +114,21 @@ class StarSeaTask:
 
     def __init__(self):
         self.mian_island = [
+            (376, 1037),
+            (376, 1037),
+            (60, 1040),
             (1410, 553)  # 传送锚点位置1 主岛
         ]
         self.beach = [
+            (376, 1037),
+            (376, 1037),
+            (60, 1040),
             (1665, 866)  # 传送锚点位置2 海滩
         ]
         self.center = [
+            (376, 1037),
+            (376, 1037),
+            (60, 1040),
             (72, 616)  # 传送锚点位置3 中心
         ]
 
@@ -360,5 +369,5 @@ class StarSeaTask:
 if __name__ == '__main__':
     util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    task.like()
+    task.ring()
     # task.photo_star_book()
