@@ -281,7 +281,7 @@ class StarSeaTask:
 
     # 点赞
     def like(self):
-        time.sleep(2)
+        util.to_main_menu()
         util.press_keyboard("esc")
         time.sleep(1)
         util.click_coordinate(573, 289)
@@ -311,8 +311,8 @@ class StarSeaTask:
         # 2.等待3s后，左走2s，前走2s，右走2s，后走2s,左走2s
         time.sleep(3)
         util.press_keyboard("A", duration=2)
-        util.press_keyboard("W", duration=2)
-        util.press_keyboard("D", duration=1.5)
+        util.press_keyboard("W", duration=1.5)
+        util.press_keyboard("D", duration=1.25)
         util.press_keyboard("S", duration=2)
         util.press_keyboard("A", duration=2)
 
@@ -379,6 +379,7 @@ class StarSeaTask:
 
         StarSeaDaily().get_diamond()
         time.sleep(340) # 等待星光凝结
+        self.get_crystal()
 
 
 if __name__ == '__main__':
