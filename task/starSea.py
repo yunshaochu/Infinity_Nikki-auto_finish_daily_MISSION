@@ -281,6 +281,7 @@ class StarSeaTask:
 
     # 点赞
     def like(self):
+        time.sleep(2)
         util.press_keyboard("esc")
         time.sleep(1)
         util.click_coordinate(573, 289)
@@ -369,5 +370,5 @@ class StarSeaTask:
 if __name__ == '__main__':
     util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    task.ring()
+    task.like()
     # task.photo_star_book()

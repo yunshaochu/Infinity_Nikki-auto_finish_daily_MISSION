@@ -117,7 +117,7 @@ def main():
             else:
                 num = "one"
             print("--------------------------------------------------素材激化幻境---------------------------------------------------------")
-            energyTask.enter_material_activation(num=num,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
+            energyTask.enter_material_activation(num=num,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable="fish2")
 
         elif name == "魔物试炼幻境":
             if "活跃能量" in task_list and 500-recognizer.Finish_data()<=200:
@@ -146,7 +146,7 @@ def main():
             # if num == "one":
             #     num = "max"
             choose = config["每日体力"]
-            energyTask.daily_run(choose,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable=config["副本设置"]["素材激化幻境"]["消耗"])
+            energyTask.daily_run(choose,choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],choice_consumable="fish2")
 
         elif name == "提升祝福闪光等级":
             ShineLevelUpTask().execute()

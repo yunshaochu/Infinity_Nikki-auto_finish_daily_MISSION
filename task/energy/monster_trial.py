@@ -28,7 +28,7 @@ class MonsterTrialAutomation:
         for item in ocr_data['ocrResult']:
             if target_text in item['text']:
                 pos = item['pos']
-                return pos['x'] + 100, pos['y'] + 160  # 直接返回调整后的坐标
+                return pos['x'], pos['y']  # 直接返回调整后的坐标
         return None
 
     def _prepare_environment(self):
@@ -40,28 +40,54 @@ class MonsterTrialAutomation:
 
     def _process_ocr(self):
         """处理OCR识别流程"""
-        image_path = get_picture_path(self.monster)
-        self.ocr_results = wechat_ocr(image_path)
+        # 全屏截图
+        screenshot_path = get_picture_path("monster_trial_temp")
+        pyautogui.screenshot(screenshot_path)
+        # 对截图进行OCR
+        self.ocr_results = wechat_ocr(screenshot_path)
 
     def _execute_actions(self,num):
         """执行自动化操作序列"""
-        target_pos = self.find_target_coordinates(self.ocr_results, self.target)
+        # 0. 鼠标放到(456, 532)，滚轮向上滚10000，确保回到顶部
+        pyautogui.moveTo(456, 532)
+        pyautogui.scroll(10000)
+        time.sleep(0.5)
 
-        if not target_pos:
-            print(f"未找到目标 '{self.target}'")
+        # 1-3. 滚动查找目标
+        max_attempts = 10  # 最大滚动次数
+        scroll_amount = int(1080 * 0.75)  # 3/4屏幕高度（假设1080p）
+
+        for attempt in range(max_attempts):
+            # 进行OCR识别
+            self._process_ocr()
+
+            # 查找目标坐标
+            target_pos = self.find_target_coordinates(self.ocr_results, self.target)
+
+            if target_pos:
+                # 3. 找到了，点击目标位置打开对应的标签页
+                print(f"目标 '{self.target}' 的坐标为: x={target_pos[0]}, y={target_pos[1]}")
+                util.click_coordinate(*target_pos)
+                break
+            else:
+                print(f"第 {attempt + 1} 次未找到目标 '{self.target}'，向下滚动...")
+                # 2. 向下滚动一定幅度
+                pyautogui.moveTo(456, 532)
+                pyautogui.scroll(-scroll_amount)
+                time.sleep(0.5)
+        else:
+            # 达到最大滚动次数仍未找到
+            print(f"达到最大滚动次数 {max_attempts}，未找到目标 '{self.target}'")
             return
 
-        print(f"目标 '{self.target}' 的坐标为: x={target_pos[0]}, y={target_pos[1]}")
-        util.click_coordinate(*target_pos)
+        # 4. 正常执行后续操作
         util.wait_and_click_image("quickChallenge")
         if num == "all":
             util.wait_and_click_image("max")
-        # util.wait_and_click_image("useEnergy")
 
     def run(self,num):
         """执行完整自动化流程"""
-        self._prepare_environment()
-        self._process_ocr()
+        # self._prepare_environment()
         self._execute_actions(num)
 
 
