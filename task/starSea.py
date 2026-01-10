@@ -300,7 +300,21 @@ class StarSeaTask:
         time.sleep(1)
         util.to_main_menu()
 
-
+    # 获取星光结晶
+    def get_crystal(self):
+        util.to_main_menu()
+        util.map_jump(coordinates=self.center, destination="星海")
+        # 1.左走3s，前走2s，然后长按x5s
+        util.press_keyboard("A", duration=1)
+        util.press_keyboard("W", duration=2)
+        util.press_keyboard("X", duration=5)
+        # 2.等待3s后，左走2s，前走2s，右走2s，后走2s,左走2s
+        time.sleep(3)
+        util.press_keyboard("A", duration=2)
+        util.press_keyboard("W", duration=2)
+        util.press_keyboard("D", duration=1.5)
+        util.press_keyboard("S", duration=2)
+        util.press_keyboard("A", duration=2)
 
 
     def put_mass(self):
@@ -370,5 +384,5 @@ class StarSeaTask:
 if __name__ == '__main__':
     util.activate_window_by_title("无限暖暖")
     task = StarSeaTask()
-    task.like()
+    task.get_crystal()
     # task.photo_star_book()
