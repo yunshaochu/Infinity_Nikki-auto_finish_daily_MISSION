@@ -49,6 +49,11 @@ class DailyMissionRecognizer:
         util.click_coordinate(1800,675)
         util.click_coordinate(1800,675)
         util.click_coordinate(1800,675)
+        util.click_coordinate(1800,565)
+        util.click_coordinate(1800,455)
+        util.click_coordinate(1800,352)
+        util.click_coordinate(1800,250)
+
         # util.press_keyboard('l')
         util.to_main_menu()
 
@@ -161,6 +166,6 @@ class DailyMissionRecognizer:
 if __name__ == "__main__":
     util.activate_window_by_title()
     recognizer = DailyMissionRecognizer()
-    # recognizer.get_diamond()
-    recognizer.run()
+    recognizer.get_diamond()
+    # recognizer.run()
     # print(recognizer.isFinish())

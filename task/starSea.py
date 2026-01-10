@@ -51,6 +51,12 @@ class StarSeaDaily:
         util.click_coordinate(1800,675)
         util.click_coordinate(1800,675)
         util.click_coordinate(1800,675)
+        util.click_coordinate(1800,565)
+        util.click_coordinate(1800,455)
+        util.click_coordinate(1800,352)
+        util.click_coordinate(1800,250)
+
+
         # util.press_keyboard('l')
         util.to_main_menu()
 

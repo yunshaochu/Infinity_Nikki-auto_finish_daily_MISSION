@@ -13,6 +13,4 @@ from task.starSea import StarSeaDaily, StarSeaTask
 n = NikkiUtil()
 n.activate_window_by_title()
 
-energyTask = EnergyTask()
-energyTask.enter_material_activation(num="one", choice_material="bubble",
-                                     choice_consumable="fish2")
+StarSeaDaily().get_diamond()
