@@ -110,4 +110,4 @@ class EnergyTask:
 if __name__ == "__main__":
     task = EnergyTask()
     util.activate_window_by_title()
-    task.daily_run("素材激化幻境")
+    task.daily_run("魔物试炼幻境")
