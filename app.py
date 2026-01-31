@@ -11,6 +11,7 @@ from task.minigame import Minigame
 from task.photo import PhotoTask
 from task.season_pass import SeasonPassTask
 from task.shine_levelup import ShineLevelUpTask
+from task.shenYuan import ShenYuan, is_shenyuan_day
 from datetime import datetime
 
 from task.shop import ShopTask
@@ -179,6 +180,21 @@ def main():
     recognizer.get_diamond()
 
     recognizer.isFinish()
+
+    # 深渊任务（每月1号和15号）
+    shenyuan_time = config["上次打深渊的时间"]
+    if is_shenyuan_day(shenyuan_time):
+        util.to_main_menu()
+        print("可以打深渊")
+        ShenYuan().run()
+        # 更新深渊时间
+        config["上次打深渊的时间"] = datetime.now().strftime("%Y-%m-%d")
+        with open("config.json", "w", encoding="utf-8") as f:
+            json.dump(config, f, ensure_ascii=False, indent=4)
+    else:
+        print("不可打深渊")
+
+
 
 
 if __name__ == "__main__":
