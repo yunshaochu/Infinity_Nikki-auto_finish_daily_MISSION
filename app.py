@@ -166,6 +166,8 @@ def main():
     SeasonPassTask().execute()
     StarSeaTask().execute()
 
+    recognizer.get_diamond()
+
     # 修改为：固定先消耗flower，再消耗fish。
     #TODO 把 config["副本设置"]["素材激化幻境"]["消耗"] 修改为列表，然后根据列表顺序消耗。比如下面的就对应列表 ["fish","fish2","flower"]
     energyTask.daily_run(choose, choice_material=config["副本设置"]["素材激化幻境"]["获取素材"],
@@ -186,6 +188,7 @@ if __name__ == "__main__":
     #     打印错误堆栈
         traceback.print_exc()
     finally:
+        DailyMissionRecognizer().get_diamond()
         config = load_task_config()
         if config.get("完成每日任务后关闭游戏", False):
             from temp.close import close_game_process
