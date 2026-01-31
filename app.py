@@ -200,11 +200,11 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+        DailyMissionRecognizer().get_diamond()
     except Exception as e:
     #     打印错误堆栈
         traceback.print_exc()
     finally:
-        DailyMissionRecognizer().get_diamond()
         config = load_task_config()
         if config.get("完成每日任务后关闭游戏", False):
             from temp.close import close_game_process
