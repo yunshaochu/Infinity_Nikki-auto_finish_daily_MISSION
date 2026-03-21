@@ -119,7 +119,7 @@ class ShenYuan:
         # 9. 主界面加载出来后，按住w向前走4s再松开w
         print("按住w向前走4秒...")
         pyautogui.keyDown('w')
-        time.sleep(4)
+        time.sleep(2)
         pyautogui.keyUp('w')
         
         # 10. 松开w后等待2s，按键盘f。接着不停点击（1377，642），至少10次
@@ -182,5 +182,10 @@ def is_shenyuan_day(last_shenyuan_time: str) -> bool:
 
 if __name__ == "__main__":
     util.activate_window_by_title()
-    shenyuan = ShenYuan()
-    shenyuan.run()
+    # 完整
+    # shenyuan = ShenYuan()
+    # shenyuan.run()
+
+    # 内层
+    inner_loop = ShenYuanInnerLoop()
+    inner_loop.run(max_iterations=10)

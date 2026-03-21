@@ -1,5 +1,6 @@
 import os
 import time
+import shutil
 
 import pyautogui
 
@@ -67,9 +68,16 @@ class DailyMissionRecognizer:
         util.wait_image('return')
         time.sleep(1)
 
-        # 把每日任务的结果截图
+        # 截图前清空 dailyResult 文件夹
+        daily_result_dir = os.path.join(find_project_root(), 'resource', 'dailyResult')
+        if os.path.exists(daily_result_dir):
+            shutil.rmtree(daily_result_dir)
+        os.makedirs(daily_result_dir, exist_ok=True)
+
+        # 把每日任务的结果截图，文件名为日期
+        date_str = time.strftime("%Y%m%d")
         pyautogui.screenshot(
-            os.path.join(find_project_root(), 'resource', 'dailyResult', 'daily_result.png'),
+            os.path.join(daily_result_dir, f'{date_str}.png'),
             region=(180,110,855 - 180, 965 - 110)  # 计算区域宽高
         )
 

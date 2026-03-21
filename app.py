@@ -182,17 +182,17 @@ def main():
     recognizer.isFinish()
 
     # 深渊任务（每月1号和15号）
-    shenyuan_time = config["上次打深渊的时间"]
-    if is_shenyuan_day(shenyuan_time):
-        util.to_main_menu()
-        print("可以打深渊")
-        ShenYuan().run()
-        # 更新深渊时间
-        config["上次打深渊的时间"] = datetime.now().strftime("%Y-%m-%d")
-        with open("config.json", "w", encoding="utf-8") as f:
-            json.dump(config, f, ensure_ascii=False, indent=4)
-    else:
-        print("不可打深渊")
+    # shenyuan_time = config["上次打深渊的时间"]
+    # if is_shenyuan_day(shenyuan_time):
+    #     util.to_main_menu()
+    #     print("可以打深渊")
+    #     ShenYuan().run()
+    #     # 更新深渊时间
+    #     config["上次打深渊的时间"] = datetime.now().strftime("%Y-%m-%d")
+    #     with open("config.json", "w", encoding="utf-8") as f:
+    #         json.dump(config, f, ensure_ascii=False, indent=4)
+    # else:
+    #     print("不可打深渊")
 
 
 
