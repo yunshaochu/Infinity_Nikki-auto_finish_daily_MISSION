@@ -48,6 +48,8 @@ class ShopTask:
         util.wait_and_click_image("yes")
         for _ in range(3):
             util.click_coordinate(950, 40)
+        # 把鼠标移动到屏幕中间
+        pyautogui.moveTo(1000, 500)
         return True
 
     def _collect_free_items(self):
